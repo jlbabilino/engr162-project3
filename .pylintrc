@@ -1,4 +1,4 @@
 [TYPECHECK]
 ignored-modules=brickpi3,grovepi,MPU9250
 ignore-paths=src/quick-demos
-ignored-modules=real.MPU9250
+ignore=MPU9250.py
