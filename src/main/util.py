@@ -15,6 +15,6 @@ class Timer:
     def has_elapsed(self, duration: float) -> bool:
         return self.started and (io.time() 
                                  >= self.start_time + duration)
-    
+
     def is_started(self) -> bool:
         return self.started

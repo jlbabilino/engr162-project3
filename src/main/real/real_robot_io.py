@@ -162,12 +162,12 @@ def print_telemetry():
     Prints telemetry data to the console. Data is printed in a csv format.
     Columns are fixed width. Three points of decimal precision are used.
     """
-    print(f"ts: {time():6.3f},"
-          f"lf_us_d: {left_front_ultrasonic_distance():6.3f}, m"
-          f"lb_us_d: {left_back_ultrasonic_distance():6.3f} m,"
-          f"f_us_d{front_ultrasonic_distance():6.3f} m,"
-          f"gyro: {math.degrees(gyro_angle()):6.3f} deg,"
-          f"mag_obs? {magnetic_obstacle_detected():6},"
-          f"ir_obs? {ir_obstacle_detected():6}"
-          f"mag_z: {_previous_magnet_reading[2]:6.3f}"
-          f"ir_avg: {0.5 * (grovepi.analogRead(IR_LEFT_PORT) + grovepi.analogRead(IR_RIGHT_PORT)):6}")
+    print(f"ts: {time():6.3f}, "
+          f"lf_us_d: {left_front_ultrasonic_distance():6.3f} m, "
+          f"lb_us_d: {left_back_ultrasonic_distance():6.3f} m, "
+          f"f_us_d{front_ultrasonic_distance():6.3f} m, "
+          f"gyro: {math.degrees(gyro_angle()):6.3f} deg, "
+          f"mag_obs? {magnetic_obstacle_detected():2}, "
+          f"ir_obs? {ir_obstacle_detected():2}, "
+          f"mag_z: {_previous_magnet_reading[2]:6.3f}, "
+          f"ir_avg: {0.5 * (grovepi.analogRead(IR_LEFT_PORT) + grovepi.analogRead(IR_RIGHT_PORT)):4}")
