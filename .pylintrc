@@ -2,3 +2,4 @@
 ignored-modules=brickpi3,grovepi,MPU9250
 ignore-paths=src/quick-demos
 ignore=MPU9250.py
+disable=global-statement
