@@ -114,6 +114,9 @@ def ir_obstacle_detected() -> bool:
     return avg_ir >= 30
 
 def time() -> float:
+    """
+    Returns the time in seconds since the robot started
+    """
     return _time.time() - _initial_time
 
 # OUTPUTS
