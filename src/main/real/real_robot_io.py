@@ -1,3 +1,7 @@
+"""
+The interface to the real robot's sensors and motors.
+"""
+
 import math
 import time as _time # Avoid name conflict with time module
 
@@ -96,7 +100,7 @@ def magnetic_obstacle_detected() -> bool:
     new_magnet_reading = math.sqrt(mpu9250.readMagnet()["x"]**2
                                  + mpu9250.readMagnet()["y"]**2
                                  + mpu9250.readMagnet()["z"]**2)
-    if (new_magnet_reading != 0):
+    if new_magnet_reading != 0:
         _previous_magnet_reading = new_magnet_reading
 
     return _previous_magnet_reading >= 600
