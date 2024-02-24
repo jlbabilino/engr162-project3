@@ -1,6 +1,4 @@
 import brickpi3
-import grovepi
-import time
 
 BP = brickpi3.BrickPi3()
 BP.set_sensor_type(BP.PORT_1, BP.SENSOR_TYPE.EV3_GYRO_ABS_DPS)
@@ -22,10 +20,3 @@ try:
 
 except KeyboardInterrupt as error:
     BP.reset_all()
-
-
-# BP.set_motor_dps(BP.PORT_B, -200)
-# BP.set_motor_dps(BP.PORT_C, 200)
-# time.sleep(1)
-# BP.set_motor_dps(BP.PORT_B, 200)
-# BP.set_motor_dps(BP.PORT_C, 200)
