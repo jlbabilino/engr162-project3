@@ -1,3 +1,7 @@
+"""
+Moves the robot forward and then rotates, then repeats.
+"""
+
 import time
 
 import brickpi3

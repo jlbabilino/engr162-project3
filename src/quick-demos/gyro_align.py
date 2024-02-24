@@ -1,3 +1,6 @@
+"""
+Uses a P controller to keep the angle pointed at the same direction.
+"""
 import brickpi3
 
 BP = brickpi3.BrickPi3()
