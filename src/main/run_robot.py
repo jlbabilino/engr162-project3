@@ -1,3 +1,5 @@
+import math
+
 from robot import Robot
 from robot_io import io
 
@@ -12,6 +14,7 @@ def run_robot(initial_state_class, *state_args) -> None:
 
         while True:
             robot.periodic()
+
             state = state.execute()
 
             # time.sleep(0.01)

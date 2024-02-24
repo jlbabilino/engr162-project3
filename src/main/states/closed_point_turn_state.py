@@ -4,13 +4,12 @@ from robot import Robot
 from robot_io import io
 from kinematics import inverse_kinematics
 from util import Timer
-from states.idle_state import IdleState
-import states.open_forward_state
 
 class ClosedPointTurnState:
-    def __init__(self, robot: Robot):
+    def __init__(self, robot: Robot, target_heading: float, next_state):
         self.robot = robot
-        self.absolute_angle = self.robot.get_target_heading()
+        self.target_heading = target_heading
+        self.next_state = next_state
 
         self.time = 1
         self.timer = Timer()
@@ -22,11 +21,9 @@ class ClosedPointTurnState:
         self.accum = 0
 
     def execute(self):
-        error = self.robot.get_target_heading() - self.absolute_angle
+        error = self.robot.get_heading() - self.target_heading
         dt = io.time() - self.previous_t
         self.accum += error * dt
-
-        print(f"Error: {error}")
 
         P = 10 * error
         I = 0.0 * self.accum
@@ -42,9 +39,9 @@ class ClosedPointTurnState:
         self.previous_error = error
 
         if self.timer.has_elapsed(self.time):
+            print(f"Error: {error}")
             print("ClosedPointTurnState: Done")
             io.set_drive_left_speed(0)
             io.set_drive_right_speed(0)
-            return states.open_forward_state.OpenForwardState(self.robot, 0.2)
-            # return IdleState(self.robot)
+            return self.next_state
         return self

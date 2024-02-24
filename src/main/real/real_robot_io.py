@@ -93,12 +93,18 @@ def gyro_angle() -> bool:
     """
     Returns the heading of the robot from the gyro, in radians
     """
+    # In test:
+    # Target: 360*20 deg
+    # Actual: 360*20 + 19
+    # It went too far, so scale down reported value
+
+
     # Keep iterating until no error happens
     while True:
         try:
             # Get the gyro angle from pair of (angle, rate)
             # Convert to radians, use counter-clockwise as positive
-            return -math.radians(BP.get_sensor(GYRO_PORT)[0])
+            return ((360*20) / (360*20 + 19)) * -math.radians(BP.get_sensor(GYRO_PORT)[0])
         except brickpi3.SensorError as error:
             pass
 
