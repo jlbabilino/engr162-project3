@@ -1,0 +1,3 @@
+[TYPECHECK]
+ignored-modules=brickpi3,grovepi
+ignore=src/quick-demos

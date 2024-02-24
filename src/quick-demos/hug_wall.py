@@ -1,6 +1,9 @@
+"""
+Hugs the left wall using the ultrasonic sensors.
+"""
+
 import brickpi3
 import grovepi
-import time
 
 BP = brickpi3.BrickPi3()
 

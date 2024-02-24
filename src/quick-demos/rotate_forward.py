@@ -1,5 +1,10 @@
-import brickpi3
+"""
+Moves the robot forward and then rotates, then repeats.
+"""
+
 import time
+
+import brickpi3
 
 BP = brickpi3.BrickPi3()
 
@@ -13,4 +18,3 @@ try:
         time.sleep(1)
 except KeyboardInterrupt as error:
     BP.reset_all()
-
