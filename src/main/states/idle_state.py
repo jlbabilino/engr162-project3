@@ -7,4 +7,5 @@ class IdleState:
 
     def execute(self):
         io.print_telemetry()
+        # io.magnetic_obstacle_detected()
         return self

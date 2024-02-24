@@ -103,20 +103,23 @@ def gyro_angle() -> bool:
             pass
 
 # Cache previous magnet reading
-_previous_magnet_reading = 0
+_previous_magnet_reading = (0, 0, 0)
 
 def magnetic_obstacle_detected() -> bool:
     """
     Check if a magnetic obstacle is in front of the robot
     """
     global _previous_magnet_reading
-    new_magnet_reading = math.sqrt(mpu9250.readMagnet()["x"]**2
-                                 + mpu9250.readMagnet()["y"]**2
-                                 + mpu9250.readMagnet()["z"]**2)
-    if new_magnet_reading != 0:
+    # new_magnet_reading = math.sqrt(mpu9250.readMagnet()["x"]**2
+    #                              + mpu9250.readMagnet()["y"]**2
+    #                              + mpu9250.readMagnet()["z"]**2)
+    raw_reading = mpu9250.readMagnet()
+    new_magnet_reading = (raw_reading["x"], raw_reading["y"], raw_reading["z"])
+    if new_magnet_reading[0] != 0:
         _previous_magnet_reading = new_magnet_reading
+        # print(f"Magnet: {new_magnet_reading}")
 
-    return _previous_magnet_reading >= 600
+    return abs(_previous_magnet_reading[2]) >= 100
 
 def ir_obstacle_detected() -> bool:
     """
@@ -125,7 +128,7 @@ def ir_obstacle_detected() -> bool:
 
     avg_ir = 0.5 * (grovepi.analogRead(IR_LEFT_PORT)
                   + grovepi.analogRead(IR_RIGHT_PORT))
-    return avg_ir >= 100
+    return avg_ir >= 110
 
 def time() -> float:
     """
@@ -159,15 +162,12 @@ def print_telemetry():
     Prints telemetry data to the console. Data is printed in a csv format.
     Columns are fixed width. Three points of decimal precision are used.
     """
-    print(f"{time():6.3f},"
-          f"{left_front_ultrasonic_distance():6.3f},"
-          f"{left_back_ultrasonic_distance():6.3f},"
-          f"{front_ultrasonic_distance():6.3f},"
-          f"{math.degrees(gyro_angle()):6.3f},"
-          f"{magnetic_obstacle_detected():6},"
-          f"{ir_obstacle_detected():6}")
-
-def print_ir():
-    # print out left and right readings using f-strings
-    print(f"Left IR: {grovepi.analogRead(IR_LEFT_PORT):6}"
-          f", Right IR: {grovepi.analogRead(IR_RIGHT_PORT):6}")
+    print(f"ts: {time():6.3f},"
+          f"lf_us_d: {left_front_ultrasonic_distance():6.3f}, m"
+          f"lb_us_d: {left_back_ultrasonic_distance():6.3f} m,"
+          f"f_us_d{front_ultrasonic_distance():6.3f} m,"
+          f"gyro: {math.degrees(gyro_angle()):6.3f} deg,"
+          f"mag_obs? {magnetic_obstacle_detected():6},"
+          f"ir_obs? {ir_obstacle_detected():6}"
+          f"mag_z: {_previous_magnet_reading[2]:6.3f}"
+          f"ir_avg: {0.5 * (grovepi.analogRead(IR_LEFT_PORT) + grovepi.analogRead(IR_RIGHT_PORT)):6}")

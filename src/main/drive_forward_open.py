@@ -1,8 +1,8 @@
 from run_robot import run_robot
-from states.forward_state import ForwardState
+from main.states.open_forward_state import OpenForwardState
 
 def main():
-    run_robot(ForwardState)
+    run_robot(OpenForwardState)
 
 if __name__ == "__main__":
     main()

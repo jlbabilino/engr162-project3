@@ -1,26 +1,23 @@
-import math
-
 from robot import Robot
 from robot_io import io
 from kinematics import inverse_kinematics
 from util import Timer
 from states.idle_state import IdleState
 
-class PointTurnState:
-    def __init__(self, robot: Robot):
+class OpenForwardState:
+    def __init__(self, robot: Robot, distance: float):
         self.robot = robot
-        self.angle = math.radians(74)
-        self.omega = math.radians(30)
-        self.time = self.angle / self.omega
-        self.left_speed, self.right_speed = inverse_kinematics(0, self.omega)
+        self.distance = distance
+        self.velocity = 0.06
+        self.time = self.distance / self.velocity
         self.timer = Timer()
         self.timer.start()
 
     def execute(self):
-        io.set_drive_left_speed(self.left_speed)
-        io.set_drive_right_speed(self.right_speed)
+        io.set_drive_left_speed(self.velocity)
+        io.set_drive_right_speed(self.velocity)
         if self.timer.has_elapsed(self.time):
-            print("PointTurnState: Done")
+            print("ForwardState: Done")
             io.set_drive_left_speed(0)
             io.set_drive_right_speed(0)
             return IdleState(self.robot)

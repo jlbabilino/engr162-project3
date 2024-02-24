@@ -1,14 +1,14 @@
 from robot import Robot
 from robot_io import io
 
-def run_robot(initial_state_class) -> None:
+def run_robot(initial_state_class, *state_args) -> None:
     io.initialize_io()
     try:
         robot = Robot()
 
         robot.initialize()
 
-        state = initial_state_class(robot)
+        state = initial_state_class(robot, *state_args)
 
         while True:
             robot.periodic()
