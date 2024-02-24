@@ -7,7 +7,7 @@ import time as _time # Avoid name conflict with time module
 
 import brickpi3
 import grovepi
-from MPU9250 import MPU9250 # IMU library
+from real.MPU9250 import MPU9250 # IMU library
 
 import constants
 
@@ -21,9 +21,9 @@ FRONT_ULTRASONIC_PORT = BP.PORT_4
 
 # GrovePi Sensor Ports
 LEFT_FRONT_ULTRASONIC_PORT = 3
-LEFT_BACK_ULTRASONIC_PORT = 4
-IR_LEFT_PORT = 14 # These are for port A0
-IR_RIGHT_PORT = 15
+LEFT_BACK_ULTRASONIC_PORT = 2
+IR_LEFT_PORT = 15 # These are for port A0
+IR_RIGHT_PORT = 14
 
 # LEGO Motor Ports
 DRIVE_LEFT_PORT = BP.PORT_B
@@ -37,8 +37,16 @@ def initialize_io():
     Initializes the LEGO sensors and motors and GrovePi sensors
     """
     # Initialize LEGO sensors
-    BP.set_sensor_type(GYRO_PORT, BP.EV3_GYRO_ABS_DPS)
+    BP.set_sensor_type(GYRO_PORT, BP.SENSOR_TYPE.EV3_GYRO_ABS_DPS)
     BP.set_sensor_type(FRONT_ULTRASONIC_PORT, BP.SENSOR_TYPE.EV3_ULTRASONIC_CM)
+
+    # Clear errors for LEGO sensors
+    print("Calibrating Gyro...")
+    gyro_angle()
+    print("Gyro Calibrated!")
+    print("Calibrating Front Ultrasonic...")
+    front_ultrasonic_distance()
+    print("Front Ultrasonic Calibrated!")
 
     # Reset motor encoders
     BP.offset_motor_encoder(
@@ -61,19 +69,25 @@ def left_front_ultrasonic_distance() -> float:
     """
     Returns the distance in meters from the left front ultrasonic sensor
     """
-    return BP.ultrasonicRead(LEFT_FRONT_ULTRASONIC_PORT) / 100 # cm -> m
+    return grovepi.ultrasonicRead(LEFT_FRONT_ULTRASONIC_PORT) / 100 # cm -> m
 
 def left_back_ultrasonic_distance() -> float:
     """
     Returns the distance in meters from the left back ultrasonic sensor
     """
-    return BP.ultrasonicRead(LEFT_BACK_ULTRASONIC_PORT) / 100 # cm -> m
+    return grovepi.ultrasonicRead(LEFT_BACK_ULTRASONIC_PORT) / 100 # cm -> m
 
 def front_ultrasonic_distance() -> float:
     """
     Returns the distance in meters from the front ultrasonic sensor
     """
-    return BP.get_sensor(FRONT_ULTRASONIC_PORT) / 100 # cm -> m
+    # Keep iterating until no error happens
+    while True:
+        try:
+            return BP.get_sensor(FRONT_ULTRASONIC_PORT) / 100 # cm -> m
+        except brickpi3.SensorError as error:
+            pass
+
 
 def gyro_angle() -> bool:
     """
@@ -86,7 +100,7 @@ def gyro_angle() -> bool:
             # Convert to radians, use counter-clockwise as positive
             return -math.radians(BP.get_sensor(GYRO_PORT)[0])
         except brickpi3.SensorError as error:
-            print(f"EV3 Gyro error: {error}")
+            pass
 
 # Cache previous magnet reading
 _previous_magnet_reading = 0
@@ -108,9 +122,10 @@ def ir_obstacle_detected() -> bool:
     """
     Check if an IR obstacle is in front of the robot
     """
+
     avg_ir = 0.5 * (grovepi.analogRead(IR_LEFT_PORT)
                   + grovepi.analogRead(IR_RIGHT_PORT))
-    return avg_ir >= 30
+    return avg_ir >= 100
 
 def time() -> float:
     """
@@ -126,7 +141,7 @@ def set_drive_left_speed(wheel_tangential_velocity: float):
     wheel_angular_speed = wheel_tangential_velocity / (
             constants.WHEEL_DIAMETER / 2)
     BP.set_motor_dps(DRIVE_LEFT_PORT,
-                     -math.degrees(wheel_angular_speed)
+                     math.degrees(wheel_angular_speed)
                      * constants.WHEEL_GEAR_RATIO)
 
 def set_drive_right_speed(wheel_tangential_velocity: float):
@@ -136,7 +151,7 @@ def set_drive_right_speed(wheel_tangential_velocity: float):
     wheel_angular_speed = wheel_tangential_velocity / (
             constants.WHEEL_DIAMETER / 2)
     BP.set_motor_dps(DRIVE_RIGHT_PORT,
-                     -math.degrees(wheel_angular_speed)
+                     math.degrees(wheel_angular_speed)
                      * constants.WHEEL_GEAR_RATIO)
 
 def print_telemetry():
@@ -148,6 +163,11 @@ def print_telemetry():
           f"{left_front_ultrasonic_distance():6.3f},"
           f"{left_back_ultrasonic_distance():6.3f},"
           f"{front_ultrasonic_distance():6.3f},"
-          f"{gyro_angle():6.3f},"
+          f"{math.degrees(gyro_angle()):6.3f},"
           f"{magnetic_obstacle_detected():6},"
           f"{ir_obstacle_detected():6}")
+
+def print_ir():
+    # print out left and right readings using f-strings
+    print(f"Left IR: {grovepi.analogRead(IR_LEFT_PORT):6}"
+          f", Right IR: {grovepi.analogRead(IR_RIGHT_PORT):6}")

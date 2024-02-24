@@ -1,8 +1,8 @@
 from robot import Robot
-import robot_io
+from robot_io import io
 
 def run_robot(initial_state_class) -> None:
-    robot_io.initialize_io()
+    io.initialize_io()
     try:
         robot = Robot()
 
@@ -19,4 +19,4 @@ def run_robot(initial_state_class) -> None:
     except KeyboardInterrupt as error:
         print("Aborting...")
 
-    robot_io.shutdown_io()
+    io.shutdown_io()
