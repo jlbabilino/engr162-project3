@@ -28,7 +28,6 @@ IR_RIGHT_PORT = 15
 # LEGO Motor Ports
 DRIVE_LEFT_PORT = BP.PORT_B
 DRIVE_RIGHT_PORT = BP.PORT_C
-RAMP_PORT = BP.PORT_A
 
 # Keep track of timestamp robot starts at
 _initial_time = 0.0
@@ -139,3 +138,16 @@ def set_drive_right_speed(wheel_tangential_velocity: float):
     BP.set_motor_dps(DRIVE_RIGHT_PORT,
                      -math.degrees(wheel_angular_speed)
                      * constants.WHEEL_GEAR_RATIO)
+
+def print_telemetry():
+    """
+    Prints telemetry data to the console. Data is printed in a csv format.
+    Columns are fixed width. Three points of decimal precision are used.
+    """
+    print(f"{time():6.3f},"
+          f"{left_front_ultrasonic_distance():6.3f},"
+          f"{left_back_ultrasonic_distance():6.3f},"
+          f"{front_ultrasonic_distance():6.3f},"
+          f"{gyro_angle():6.3f},"
+          f"{magnetic_obstacle_detected():6},"
+          f"{ir_obstacle_detected():6}")
