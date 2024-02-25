@@ -34,7 +34,7 @@ class PointTurnCommand:
 
         error = self.robot.get_heading() - self.set_point
 
-        P = 10 * error
+        P = 6 * error
 
         control_input = FF - P
 

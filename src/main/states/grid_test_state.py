@@ -10,9 +10,9 @@ import commands.point_turn_command
 import commands.wait_command
 import commands.sequential_command
 
-# actions = ["f", "l", "f", "r", "f", "l"]
+actions = ["f", "f", "f", "r", "f", "r", "f", "f", "r", "f"]
 # actions = ["f", "r", "f", "f", "l"]
-actions = ["f", "f", "f"]
+# actions = ["f", "f", "f"]
 
 class GridTestState:
     def __init__(self, robot: Robot):
