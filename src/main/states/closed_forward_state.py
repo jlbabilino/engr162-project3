@@ -5,7 +5,9 @@ class ClosedForwardState:
     def __init__(self, robot: Robot, target_heading: float):
         self.robot = robot
         self.target_heading = target_heading
+
         self.velocity = 0.06
+
 
     def execute(self):
         error = self.robot.get_heading() - self.target_heading

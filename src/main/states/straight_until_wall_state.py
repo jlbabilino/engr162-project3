@@ -5,15 +5,20 @@ from robot_io import io
 import states.closed_forward_state
 import states.open_point_turn_state
 
+import states.turn_then_straight_state
+import commands.drive_forward_command
+
 class StraightUntilWallState:
     def __init__(self, robot: Robot, target_heading: float):
         self.robot = robot
-        self.target_heading = target_heading # Assume pointed in right direction
-        self.closed_forward_state = states.closed_forward_state.ClosedForwardState(self.robot, self.target_heading)
+        self.target_heading = target_heading
+
+        self.drive_command = commands.drive_forward_command.DriveForwardCommand(self.robot, self.target_heading, 10)
+
+        self.drive_command.initialize()
 
     def execute(self):
-
-        self.closed_forward_state.execute()
+        self.drive_command.execute()
 
         io.print_telemetry()
         if io.front_ultrasonic_distance() <= 0.09:
@@ -21,10 +26,9 @@ class StraightUntilWallState:
             if (io.left_front_ultrasonic_distance() <= 0.3): # must be a right turn
                 print("Decided to make a right turn")
                 self.target_heading += math.radians(-90)
-                return states.open_point_turn_state.OpenPointTurnState(self.robot, self.target_heading, StraightUntilWallState(self.robot, self.target_heading))
             else:
                 print("Decided to make a left turn")
                 self.target_heading += math.radians(90)
-                return states.open_point_turn_state.OpenPointTurnState(self.robot, self.target_heading, StraightUntilWallState(self.robot, self.target_heading))
+            return states.turn_then_straight_state.TurnThenStraightState(self.robot, self.target_heading)
         else:
             return self

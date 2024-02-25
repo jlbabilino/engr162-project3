@@ -104,7 +104,8 @@ def gyro_angle() -> bool:
         try:
             # Get the gyro angle from pair of (angle, rate)
             # Convert to radians, use counter-clockwise as positive
-            return ((360*20) / (360*20 + 19)) * -math.radians(BP.get_sensor(GYRO_PORT)[0])
+            # return ((360*20) / (360*20 + 19)) * -math.radians(BP.get_sensor(GYRO_PORT)[0])
+            return -math.radians(BP.get_sensor(GYRO_PORT)[0])
         except brickpi3.SensorError as error:
             pass
 
