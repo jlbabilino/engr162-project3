@@ -10,7 +10,7 @@ import commands.point_turn_command
 import commands.wait_command
 import commands.sequential_command
 
-actions = ["f", "f", "f", "r", "f", "r", "f", "f", "r", "f"]
+actions = ["f", "l", "l", "l", "f"]
 # actions = ["f", "r", "f", "f", "l"]
 # actions = ["f", "f", "f"]
 

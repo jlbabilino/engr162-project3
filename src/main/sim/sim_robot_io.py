@@ -11,13 +11,13 @@ from sim.sim_manager import SimRobotState
 
 fig, ax = plt.subplots()
 
-robot_marker = plt.Rectangle((0, 0), 1, 1, angle=40, rotation_point="center", color='blue')
+robot_marker = plt.Rectangle((0, 0), constants.ROBOT_LENGTH, constants.ROBOT_WIDTH, angle=0, rotation_point="center", color='blue')
 
 ax.add_patch(robot_marker)
 ax.set_aspect('equal')
 
-ax.set_xlim(-5, 5)
-ax.set_ylim(-5, 5)
+ax.set_xlim(-1, 1)
+ax.set_ylim(-1, 1)
 
 # Keep track of timestamp robot starts at
 _initial_time = 0.0
@@ -67,7 +67,7 @@ def time() -> float:
     """
     Returns the time in seconds since the robot started
     """
-    return _time.time() - _initial_time
+    return (_time.time() - _initial_time)*3
 
 # OUTPUTS
 def set_drive_left_speed(wheel_tangential_velocity: float):
