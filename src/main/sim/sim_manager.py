@@ -2,13 +2,14 @@ from dataclasses import dataclass
 from enum import Enum
 import math
 
+import constants
 from util import DriveWheelPositions, Pose2d
 from kinematics import forward_kinematics
 
-class WallType(Enum):
-    FINITE_SEGMENT = 1
-    ONE_SIDED_INFINITE_RAY = 2
-    INFINITE_LINE = 3
+# class WallType(Enum):
+#     FINITE_SEGMENT = 1
+#     ONE_SIDED_INFINITE_RAY = 2
+#     INFINITE_LINE = 3
 
 @dataclass
 class Wall:
@@ -16,12 +17,19 @@ class Wall:
     y1: float
     x2: float
     y2: float
-    wall_type: WallType
-    
 
-# class Environment:
-#     def __init__(self):
-#         walls = []
+@dataclass
+class Ultrasonic:
+    x_offset: float
+    y_offset: float
+    heading_offset: float
+
+class Environment:
+    def __init__(self, walls: list):
+        self.walls = walls
+
+    def get_walls(self) -> list[Wall]:
+        return self.walls
 
 class SimRobotState:
     def __init__(self):
@@ -66,3 +74,37 @@ class SimRobotState:
     
     def get_pose(self):
         return self.pose
+
+# def is_wall_ultrasonic_parallel(wall: Wall, pose: Pose2d, ultrasonic_angle: float) -> float:
+#     u_dx = math.cos(ultrasonic_angle)
+#     u_dy = math.sin(ultrasonic_angle)
+
+#     w_dx = wall.x2 - wall.x1
+#     w_dy = wall.y2 - wall.y1
+
+#     u_cross_w = u_dx * w_dy - u_dy * w_dx
+
+#     return abs(u_cross_w) <= 1e-4
+
+# def does_wall_ultrasonic_intersect(wall: Wall, pose: Pose2d, ultrasonic_angle: float) -> bool:
+#     u_dx = math.cos(ultrasonic_angle)
+#     u_dy = math.sin(ultrasonic_angle)
+
+#     w_dx = wall.x2 - wall.x1
+#     w_dy = wall.y2 - wall.y1
+
+#     u_cross_w = u_dx * w_dy - u_dy * w_dx
+
+#     if abs(u_cross_w) <= 1e-4:
+#         return False
+
+#     p_dx = pose.x - wall.x1
+#     p_dy = pose.y - wall.y1
+
+#     p_cross_w = p_dx * w_dy - p_dy * w_dx
+#     p_cross_u = p_dx * u_dy - p_dy * u_dx
+
+#     t = p_cross_w / u_cross_w
+#     u = p_cross_u / u_cross_w
+
+#     return t >= 0 and t <= 1 and u >= 0 and u <= 1
