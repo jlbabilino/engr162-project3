@@ -1,6 +1,6 @@
 from robot import Robot
 from robot_io import io
-from util import Timer
+from timer import Timer
 
 class SequentialCommand:
     def __init__(self, commands: list):

@@ -32,7 +32,7 @@ DRIVE_RIGHT_PORT = BP.PORT_C
 # Keep track of timestamp robot starts at
 _initial_time = 0.0
 
-def initialize_io():
+def initialize():
     """
     Initializes the LEGO sensors and motors and GrovePi sensors
     """
@@ -58,7 +58,10 @@ def initialize_io():
     # Initialize timestamp so that time() returns 0 at the start of the program
     _initial_time = _time.time()
 
-def shutdown_io():
+def periodic():
+    pass
+
+def shutdown():
     """
     Shuts down the LEGO sensors and motors and GrovePi sensors
     """

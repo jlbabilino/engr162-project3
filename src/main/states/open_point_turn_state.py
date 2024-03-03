@@ -3,7 +3,7 @@ import math
 from robot import Robot
 from robot_io import io
 from kinematics import inverse_kinematics
-from util import Timer
+from timer import Timer
 from states.idle_state import IdleState
 import states.closed_point_turn_state
 

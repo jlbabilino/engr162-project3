@@ -1,26 +1,12 @@
-from robot_io import io
+from dataclasses import dataclass
 
-class Timer:
-    def __init__(self):
-        self.start_time = 0.0
-        self.started = False
+@dataclass
+class DriveWheelPositions:
+    left: float
+    right: float
 
-    def reset(self):
-        self.started = False
-
-    def start(self):
-        self.start_time = io.time()
-        self.started = True
-
-    def elapsed_time(self) -> float:
-        if self.started:
-            return io.time() - self.start_time
-        else:
-            return 0.0
-
-    def has_elapsed(self, duration: float) -> bool:
-        return self.started and (io.time() 
-                                 >= self.start_time + duration)
-
-    def is_started(self) -> bool:
-        return self.started
+@dataclass
+class Pose2d:
+    x: float
+    y: float
+    heading: float
