@@ -21,7 +21,7 @@ ax.set_ylim(-1, 1)
 
 ax.grid(True)
 
-NUM_GRIDLINES_QUADRANT = 4
+NUM_GRIDLINES_QUADRANT = 12
 ticks = [x * WALL_LENGTH for x in range(-NUM_GRIDLINES_QUADRANT,
                                         +NUM_GRIDLINES_QUADRANT)]
 

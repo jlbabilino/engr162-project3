@@ -1,7 +1,7 @@
+from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 import math
-from __future__ import annotations
 
 import constants
 from util import DriveWheelPositions, Pose2d
@@ -49,28 +49,16 @@ class Environment:
     def scale(self, factor: float) -> Environment:
         return Environment([wall.scale(factor) for wall in self.walls])
 
-sim_environment = Environment([
-    Wall(0.2, 0.2, -0.2, 0.2),
-    Wall(-0.2, 0.2, -0.2, -0.2),
-    Wall(-0.2, -0.2, 0.2, -0.2),
-    Wall(0.2, -0.2, 0.6, -0.2),
-    Wall(0.6, -0.2, 0.6, 0.2),
-    Wall(0.6, 0.2, 0.6, 0.6),
-    Wall(0.6, 0.6, 0.2, 0.6),
-    Wall(0.2, 0.6, -0.2, 0.6),
-    Wall(-0.2, 0.6, -0.6, 0.6),
-    Wall(-0.6, 0.6, -0.6, 0.2),
-    Wall(-0.6, 0.2, -0.6, -0.2),
-])
+WALL_LENGTH = 0.4
 
-sim_environment2 = Environment([
+sim_environment = Environment([
     Wall(0 , 0 , 2 , 0),
     Wall(2 , 0 , 2 , -1),
     Wall(2 , -1 , 4 , -1),
     Wall(4 , -1 , 4 , 0),
     Wall(4 , 0 , 7 , 0),
     Wall(7 , 0, 7, -1),
-    Wall(7 , -1 , 8 -1),
+    Wall(7 , -1 , 8, -1),
     Wall(8 , -1 , 8 , -4),
     Wall(8 , -4, 9 , -4),
     Wall(9 , -4, 9 , -5),
@@ -107,7 +95,7 @@ sim_environment2 = Environment([
     Wall(3, -5, 3, -6),
     Wall(3, -6, 2, -6),
     Wall(2, -6, 2, -5)
-])
+]).scale(WALL_LENGTH)
 
 class SimRobotState:
     def __init__(self):
