@@ -88,7 +88,7 @@ def time() -> float:
     """
     Returns the time in seconds since the robot started
     """
-    return (_time.time() - _initial_time)*10
+    return (_time.time() - _initial_time)*3
 
 # OUTPUTS
 def set_drive_left_speed(wheel_tangential_velocity: float):
