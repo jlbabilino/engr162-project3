@@ -24,12 +24,34 @@ class Ultrasonic:
     y_offset: float
     heading_offset: float
 
+front_ultrasonic = Ultrasonic(constants.FRONT_ULTRASONIC_OFFSET, 0, 0)
+left_front_ultrasonic = Ultrasonic(constants.LEFT_FRONT_ULTRASONIC_OFFSET,
+                                   constants.SIDE_ULTRASONIC_OFFSET,
+                                   math.radians(90))
+left_back_ultrasonic = Ultrasonic(constants.LEFT_BACK_ULTRASONIC_OFFSET,
+                                  constants.SIDE_ULTRASONIC_OFFSET,
+                                  math.radians(90))
+
 class Environment:
     def __init__(self, walls: list):
         self.walls = walls
 
     def get_walls(self) -> list[Wall]:
         return self.walls
+    
+sim_environment = Environment([
+    Wall(0.2, 0.2, -0.2, 0.2),
+    Wall(-0.2, 0.2, -0.2, -0.2),
+    Wall(-0.2, -0.2, 0.2, -0.2),
+    Wall(0.2, -0.2, 0.6, -0.2),
+    Wall(0.6, -0.2, 0.6, 0.2),
+    Wall(0.6, 0.2, 0.6, 0.6),
+    Wall(0.6, 0.6, 0.2, 0.6),
+    Wall(0.2, 0.6, -0.2, 0.6),
+    Wall(-0.2, 0.6, -0.6, 0.6),
+    Wall(-0.6, 0.6, -0.6, 0.2),
+    Wall(-0.6, 0.2, -0.6, -0.2),
+])
 
 class SimRobotState:
     def __init__(self):
@@ -40,6 +62,10 @@ class SimRobotState:
 
         self.left_wheel_position = 0
         self.right_wheel_position = 0
+
+        self.front_ultrasonic_distance = 255
+        self.left_front_ultrasonic_distance = 255
+        self.left_back_ultrasonic_distance = 255
 
         self.time = 0
 
@@ -58,6 +84,10 @@ class SimRobotState:
         self.pose = forward_kinematics(self.pose, prev_wheel_positions,
                                        curr_wheel_positions)
 
+        # self.front_ultrasonic_distance = ultrasonic_distance(self.pose, front_ultrasonic, sim_environment)
+        # self.left_front_ultrasonic_distance = ultrasonic_distance(self.pose, left_front_ultrasonic, sim_environment)
+        # self.left_back_ultrasonic_distance = ultrasonic_distance(self.pose, left_back_ultrasonic, sim_environment)
+
         self.time = time
 
     def set_left_wheel_velocity(self, velocity: float):
@@ -74,6 +104,64 @@ class SimRobotState:
     
     def get_pose(self):
         return self.pose
+    
+def ultrasonic_distance(pose: Pose2d, ultrasonic: Ultrasonic, environment: Environment) -> float:
+    min_distance = float('inf')
+
+    # https://www.desmos.com/calculator/qxbd0xj5ar
+    for wall in environment.get_walls():
+        # if is_wall_ultrasonic_parallel(wall, pose, ultrasonic.heading_offset):
+        #     continue
+
+        # if not does_wall_ultrasonic_intersect(wall, pose, ultrasonic.heading_offset):
+        #     continue
+
+        w_1x = wall.x1
+        w_1y = wall.y1
+
+        w_2x = wall.x2
+        w_2y = wall.y2
+
+
+        u_theta = pose.heading + ultrasonic.heading_offset
+
+        u_dx = math.cos(u_theta)
+        u_dy = math.sin(u_theta)
+
+
+
+        p_dx = pose.x - wall.x1
+        p_dy = pose.y - wall.y1
+
+        # w_dx = wall.x2 - wall.x1
+        # w_dy = wall.y2 - wall.y1
+
+        # w_cross_p = w_dx * p_dy - w_dy * p_dx
+        # w_cross_u = w_dx * ultrasonic.y_offset - w_dy * ultrasonic.x_offset
+
+        # t = w_cross_p / w_cross_u
+
+        # if t < 0:
+        #     continue
+
+        # u_dx = math.cos(ultrasonic.heading_offset)
+        # u_dy = math.sin(ultrasonic.heading_offset)
+
+        # u_cross_p = u_dx * p_dy - u_dy * p_dx
+        # u_cross_w = u_dx * w_dy - u_dy * w_dx
+
+        # u = u_cross_p / u_cross_w
+
+        # if u < 0 or u > 1:
+        #     continue
+
+        # distance = abs(t)
+
+        distance = float('inf')
+
+        min_distance = min(min_distance, distance)
+
+    return min_distance
 
 # def is_wall_ultrasonic_parallel(wall: Wall, pose: Pose2d, ultrasonic_angle: float) -> float:
 #     u_dx = math.cos(ultrasonic_angle)

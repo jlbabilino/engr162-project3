@@ -7,7 +7,7 @@ import math
 import time as _time # Avoid name conflict with time module
 
 import constants
-from sim.sim_manager import SimRobotState, Environment, Wall, Ultrasonic
+from sim.sim_manager import SimRobotState, Environment, Wall, Ultrasonic, sim_environment
 
 fig, ax = plt.subplots()
 
@@ -27,33 +27,11 @@ ax.set_yticks([-1, -0.6, -0.2, 0.2, 0.6, 1])
 _initial_time = 0.0
 sim_robot_state = SimRobotState()
 
-sim_environment = Environment([
-    Wall(0.2, 0.2, -0.2, 0.2),
-    Wall(-0.2, 0.2, -0.2, -0.2),
-    Wall(-0.2, -0.2, 0.2, -0.2),
-    Wall(0.2, -0.2, 0.6, -0.2),
-    Wall(0.6, -0.2, 0.6, 0.2),
-    Wall(0.6, 0.2, 0.6, 0.6),
-    Wall(0.6, 0.6, 0.2, 0.6),
-    Wall(0.2, 0.6, -0.2, 0.6),
-    Wall(-0.2, 0.6, -0.6, 0.6),
-    Wall(-0.6, 0.6, -0.6, 0.2),
-    Wall(-0.6, 0.2, -0.6, -0.2),
-])
-
-front_ultrasonic = Ultrasonic(constants.FRONT_ULTRASONIC_OFFSET, 0, 0)
-left_front_ultrasonic = Ultrasonic(constants.LEFT_FRONT_ULTRASONIC_OFFSET,
-                                   constants.SIDE_ULTRASONIC_OFFSET,
-                                   math.radians(90))
-left_back_ultrasonic = Ultrasonic(constants.LEFT_BACK_ULTRASONIC_OFFSET,
-                                  constants.SIDE_ULTRASONIC_OFFSET,
-                                  math.radians(90))
-
 ultrasonic_markers = []
 
-for ultrasonic in [front_ultrasonic, left_front_ultrasonic, left_back_ultrasonic]:
-    ultrasonic_markers.append(plt.Line2D([0, ultrasonic.x_offset], [0, ultrasonic.y_offset], color='red'))
-    ax.add_line(ultrasonic_markers[-1])
+# for ultrasonic in [front_ultrasonic, left_front_ultrasonic, left_back_ultrasonic]:
+#     ultrasonic_markers.append(plt.Line2D([0, ultrasonic.x_offset], [0, ultrasonic.y_offset], color='red'))
+#     ax.add_line(ultrasonic_markers[-1])
 
 wall_markers = []
 
@@ -103,7 +81,7 @@ def time() -> float:
     """
     Returns the time in seconds since the robot started
     """
-    return (_time.time() - _initial_time)*3
+    return (_time.time() - _initial_time)*10
 
 # OUTPUTS
 def set_drive_left_speed(wheel_tangential_velocity: float):
