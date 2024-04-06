@@ -7,7 +7,7 @@ import math
 import time as _time # Avoid name conflict with time module
 
 import constants
-from sim.sim_manager import SimRobotState, Environment, Wall, Ultrasonic, sim_environment
+from sim.sim_manager import SimRobotState, Environment, Wall, Ultrasonic, sim_environment, WALL_LENGTH
 
 fig, ax = plt.subplots()
 
@@ -20,8 +20,13 @@ ax.set_xlim(-1, 1)
 ax.set_ylim(-1, 1)
 
 ax.grid(True)
-ax.set_xticks([-1, -0.6, -0.2, 0.2, 0.6, 1])
-ax.set_yticks([-1, -0.6, -0.2, 0.2, 0.6, 1])
+
+NUM_GRIDLINES_QUADRANT = 4
+ticks = [x * WALL_LENGTH for x in range(-NUM_GRIDLINES_QUADRANT,
+                                        +NUM_GRIDLINES_QUADRANT)]
+
+ax.set_xticks(ticks)
+ax.set_yticks(ticks)
 
 # Keep track of timestamp robot starts at
 _initial_time = 0.0

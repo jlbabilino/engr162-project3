@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 import math
+from __future__ import annotations
 
 import constants
 from util import DriveWheelPositions, Pose2d
@@ -17,6 +18,12 @@ class Wall:
     y1: float
     x2: float
     y2: float
+
+    def scale(self, factor: float) -> Wall:
+        return Wall(self.x1 * factor, 
+                    self.y1 * factor,
+                    self.x2 * factor,
+                    self.y2 * factor)
 
 @dataclass
 class Ultrasonic:
@@ -38,7 +45,10 @@ class Environment:
 
     def get_walls(self) -> list[Wall]:
         return self.walls
-    
+
+    def scale(self, factor: float) -> Environment:
+        return Environment([wall.scale(factor) for wall in self.walls])
+
 sim_environment = Environment([
     Wall(0.2, 0.2, -0.2, 0.2),
     Wall(-0.2, 0.2, -0.2, -0.2),
