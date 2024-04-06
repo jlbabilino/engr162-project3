@@ -103,7 +103,7 @@ sim_environment = Environment([
 
 class SimRobotState:
     def __init__(self):
-        self.pose = Pose2d(0, 0, 0)
+        self.pose = Pose2d(WALL_LENGTH / 2, WALL_LENGTH / 2, 0)
 
         self.left_wheel_velocity = 0
         self.right_wheel_velocity = 0

@@ -29,6 +29,9 @@ class DriveForwardCommand:
     def initialize(self):
         self.timer.start()
 
+        print("DriveForwardCommand: Initialized")
+        print(f"DriveForwardCommand: Distance = {self.distance:.3f} m")
+
     def execute(self) -> bool:
         error = self.robot.get_heading() - self.target_heading
 

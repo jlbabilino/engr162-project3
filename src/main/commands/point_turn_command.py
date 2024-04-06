@@ -33,6 +33,9 @@ class PointTurnCommand:
 
         self.left_speed, self.right_speed = inverse_kinematics(0, self.omega)
 
+        print("PointTurnCommand: Starting")
+        print(f"PointTurnCommand: θ = {math.degrees(self.target_heading)} deg")
+
     def execute(self) -> bool:
         # Moving setpoint
         if (self.timer.elapsed_time() <= self.turn_duration):

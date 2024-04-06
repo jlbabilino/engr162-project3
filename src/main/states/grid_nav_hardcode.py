@@ -14,7 +14,11 @@ actions = ["f", "l", "l", "l", "f"]
 # actions = ["f", "r", "f", "f", "l"]
 # actions = ["f", "f", "f"]
 
-class GridTestState:
+class GridNavHardcode:
+    """
+    This state is used to hardcode a path for the robot to follow. It uses a
+    sequence of commands.
+    """
     def __init__(self, robot: Robot):
         self.robot = robot
         self.commands = []

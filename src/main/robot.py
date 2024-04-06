@@ -9,7 +9,7 @@ class Robot:
 
     def initialize(self):
         self.heading_offset = io.gyro_angle()
-        print("initialized")
+        print("Robot: initialized")
 
     def get_heading(self):
         return io.gyro_angle() - self.heading_offset

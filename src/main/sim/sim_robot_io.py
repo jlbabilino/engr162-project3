@@ -23,7 +23,7 @@ ax.set_ylim(-1, 1)
 
 ax.grid(True)
 
-NUM_GRIDLINES_QUADRANT = 12
+NUM_GRIDLINES_QUADRANT = 7
 ticks = [x * WALL_LENGTH for x in range(-NUM_GRIDLINES_QUADRANT,
                                         +NUM_GRIDLINES_QUADRANT)]
 
@@ -102,4 +102,4 @@ def set_drive_right_speed(wheel_tangential_velocity: float):
     sim_robot_state.set_right_wheel_velocity(wheel_tangential_velocity)
 
 def print_telemetry():
-    print("Telemetry")
+    ...
