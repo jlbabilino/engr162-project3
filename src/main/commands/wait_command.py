@@ -3,6 +3,9 @@ from robot_io import io
 from timer import Timer
 
 class WaitCommand:
+    """
+    Command to wait for a certain duration
+    """
     def __init__(self, duration: float):
         self.duration = duration
         self.timer = Timer()

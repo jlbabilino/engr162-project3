@@ -3,7 +3,19 @@ from robot_io import io
 from timer import Timer
 
 class DriveForwardCommand:
+    """
+    Command to drive the robot forward a certain distance
+    """
     def __init__(self, robot: Robot, target_heading: float, distance: float):
+        """
+        Create a DriveForwardCommand
+
+        Args:
+            robot: The robot object
+            target_heading: The target heading to drive in direction of
+            distance: The distance to drive (can be math.inf)
+        """
+
         self.robot = robot
         self.target_heading = target_heading
         self.distance = distance

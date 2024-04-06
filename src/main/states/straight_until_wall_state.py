@@ -2,7 +2,6 @@ import math
 
 from robot import Robot
 from robot_io import io
-import states.closed_forward_state
 import states.open_point_turn_state
 
 import states.turn_then_straight_state

@@ -1,3 +1,7 @@
+"""
+Useful functions and tools for simulating the robot in a 2D environment
+"""
+
 from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum

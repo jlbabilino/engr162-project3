@@ -6,7 +6,17 @@ from kinematics import inverse_kinematics
 from timer import Timer
 
 class PointTurnCommand:
+    """
+    Command to turn the robot to a certain heading
+    """
     def __init__(self, robot: Robot, target_heading: float):
+        """
+        Create a PointTurnCommand
+
+        Args:
+            robot: The robot object
+            target_heading: The target heading to turn to
+        """
         self.robot = robot
         self.target_heading = target_heading
 
