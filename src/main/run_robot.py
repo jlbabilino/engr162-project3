@@ -4,7 +4,7 @@ from robot import Robot
 from robot_io import io
 
 def run_robot(initial_state_class, *state_args) -> None:
-    io.initialize_io()
+    io.initialize()
     try:
         robot = Robot()
 
@@ -14,6 +14,7 @@ def run_robot(initial_state_class, *state_args) -> None:
 
         while True:
             robot.periodic()
+            io.periodic()
 
             state = state.execute()
 
@@ -22,4 +23,4 @@ def run_robot(initial_state_class, *state_args) -> None:
     except KeyboardInterrupt as error:
         print("Aborting...")
 
-    io.shutdown_io()
+    io.shutdown()

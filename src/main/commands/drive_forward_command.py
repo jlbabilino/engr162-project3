@@ -1,6 +1,6 @@
 from robot import Robot
 from robot_io import io
-from util import Timer
+from timer import Timer
 
 class DriveForwardCommand:
     def __init__(self, robot: Robot, target_heading: float, distance: float):

@@ -3,7 +3,7 @@ import math
 from robot import Robot
 from robot_io import io
 from kinematics import inverse_kinematics
-from util import Timer
+from timer import Timer
 
 class ClosedPointTurnState:
     def __init__(self, robot: Robot, target_heading: float, next_state):

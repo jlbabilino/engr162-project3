@@ -1,6 +1,6 @@
 from robot import Robot
 from robot_io import io
-from util import Timer
+from timer import Timer
 
 class WaitCommand:
     def __init__(self, duration: float):

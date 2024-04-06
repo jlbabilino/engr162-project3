@@ -1,26 +1,37 @@
-from robot_io import io
+import math
+from dataclasses import dataclass
 
-class Timer:
-    def __init__(self):
-        self.start_time = 0.0
-        self.started = False
+@dataclass
+class DriveWheelPositions:
+    left: float
+    right: float
 
-    def reset(self):
-        self.started = False
+@dataclass
+class Translation2d:
+    x: float
+    y: float
 
-    def start(self):
-        self.start_time = io.time()
-        self.started = True
+@dataclass
+class Transform2d:
+    translation: Translation2d
+    rotation: float
 
-    def elapsed_time(self) -> float:
-        if self.started:
-            return io.time() - self.start_time
-        else:
-            return 0.0
+@dataclass
+class Pose2d:
+    x: float
+    y: float
+    heading: float
 
-    def has_elapsed(self, duration: float) -> bool:
-        return self.started and (io.time() 
-                                 >= self.start_time + duration)
-
-    def is_started(self) -> bool:
-        return self.started
+    def __plus__(self, transform: Transform2d):
+        # Adds the given transformation to the pose.
+        # Adds the transform relative to the pose's frame of reference.
+        dx = transform.translation.x
+        dy = transform.translation.y
+        theta = transform.rotation
+        return Pose2d(
+            self.x + dx * math.cos(self.heading)
+                   - dy * math.sin(self.heading),
+            self.y + dx * math.sin(self.heading)
+                   + dy * math.cos(self.heading),
+            self.heading + transform.rotation
+        )
