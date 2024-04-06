@@ -1,5 +1,7 @@
 """
-The interface to the simulated robot's sensors and motors.
+The interface to the simulated robot's sensors and motors. It is a drop-in
+replacement for real_robot_io.py. Uses matplotlib to visualize the robot's
+state and environment.
 """
 
 import matplotlib.pyplot as plt
