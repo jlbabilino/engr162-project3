@@ -1,3 +1,7 @@
+"""
+Tools for running the robot in a state machine.
+"""
+
 import math
 
 from robot import Robot

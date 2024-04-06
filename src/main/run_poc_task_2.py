@@ -1,3 +1,8 @@
+"""
+Runnable script for the POC task 2. POC task 2 is to turn the robot in place by
+a specified angle.
+"""
+
 import math
 
 from robot_run_util import run_robot

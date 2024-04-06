@@ -1,6 +1,10 @@
 from robot_io import io
 
 class Robot:
+    """
+    Represents the robot's understanding of its own state, including its
+    heading, and allows for running general robot code periodically.
+    """
 
     def __init__(self):
         self.heading_offset = 0.0

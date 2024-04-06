@@ -1,9 +1,17 @@
+"""
+Functions to convert between wheel speeds and positions and robot velocities
+and positions
+"""
+
 import math
 import constants
 from util import Pose2d, DriveWheelPositions
 
 def inverse_kinematics(linear_velocity: float,
                        angular_velocity: float):
+    """
+    Converts linear and angular velocity to left and right wheel speeds
+    """
     left_speed = linear_velocity - (constants.TRACK_WIDTH / 2) * angular_velocity
     right_speed = linear_velocity + (constants.TRACK_WIDTH / 2) * angular_velocity
     return left_speed, right_speed
@@ -11,6 +19,9 @@ def inverse_kinematics(linear_velocity: float,
 def forward_kinematics(prev_pose: Pose2d,
                        prev_wheel_positions: DriveWheelPositions,
                        curr_wheel_positions: DriveWheelPositions) -> Pose2d:
+    """
+    Converts left and right wheel positions to a new pose
+    """
     left_distance = curr_wheel_positions.left - prev_wheel_positions.left
     right_distance = curr_wheel_positions.right - prev_wheel_positions.right
     
