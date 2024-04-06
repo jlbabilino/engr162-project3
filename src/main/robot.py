@@ -1,6 +1,10 @@
 from robot_io import io
 
 class Robot:
+    """
+    Represents the robot's understanding of its own state, including its
+    heading, and allows for running general robot code periodically.
+    """
 
     def __init__(self):
         self.heading_offset = 0.0
@@ -9,7 +13,7 @@ class Robot:
 
     def initialize(self):
         self.heading_offset = io.gyro_angle()
-        print("initialized")
+        print("Robot: initialized")
 
     def get_heading(self):
         return io.gyro_angle() - self.heading_offset

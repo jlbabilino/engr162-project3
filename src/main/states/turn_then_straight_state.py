@@ -3,6 +3,10 @@ import states.straight_until_wall_state
 import commands.point_turn_command
 
 class TurnThenStraightState:
+    """
+    This state starts by turning the robot to a target heading, and then
+    transitions to going straight again.
+    """
     def __init__(self, robot: Robot, target_heading: float):
         self.robot = robot
         self.target_heading = target_heading

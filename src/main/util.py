@@ -3,11 +3,18 @@ from dataclasses import dataclass
 
 @dataclass
 class DriveWheelPositions:
+    """
+    Represents the positions of the left and right drive wheels, as in the
+    distance each wheel has traveled on the ground.
+    """
     left: float
     right: float
 
 @dataclass
 class Translation2d:
+    """
+    Represents position in 2d space
+    """
     x: float
     y: float
 
@@ -33,5 +40,5 @@ class Pose2d:
                    - dy * math.sin(self.heading),
             self.y + dx * math.sin(self.heading)
                    + dy * math.cos(self.heading),
-            self.heading + transform.rotation
+            self.heading + theta
         )

@@ -3,6 +3,9 @@ from robot_io import io
 from timer import Timer
 
 class SequentialCommand:
+    """
+    Command that runs a list of commands in order before terminating
+    """
     def __init__(self, commands: list):
         self.commands = commands
 

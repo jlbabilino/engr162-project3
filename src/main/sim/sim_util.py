@@ -1,3 +1,7 @@
+"""
+Useful functions and tools for simulating the robot in a 2D environment
+"""
+
 from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
@@ -7,13 +11,11 @@ import constants
 from util import DriveWheelPositions, Pose2d
 from kinematics import forward_kinematics
 
-# class WallType(Enum):
-#     FINITE_SEGMENT = 1
-#     ONE_SIDED_INFINITE_RAY = 2
-#     INFINITE_LINE = 3
-
 @dataclass
 class Wall:
+    """
+    Represents a wall in the 2D maze environment
+    """
     x1: float
     y1: float
     x2: float
@@ -27,6 +29,9 @@ class Wall:
 
 @dataclass
 class Ultrasonic:
+    """
+    Represents an ultrasonic sensor on the robot
+    """
     x_offset: float
     y_offset: float
     heading_offset: float
@@ -40,6 +45,9 @@ left_back_ultrasonic = Ultrasonic(constants.LEFT_BACK_ULTRASONIC_OFFSET,
                                   math.radians(90))
 
 class Environment:
+    """
+    Represents the environment the robot is in, with walls and obstacles
+    """
     def __init__(self, walls: list):
         self.walls = walls
 
@@ -49,57 +57,14 @@ class Environment:
     def scale(self, factor: float) -> Environment:
         return Environment([wall.scale(factor) for wall in self.walls])
 
-WALL_LENGTH = 0.4
-
-sim_environment = Environment([
-    Wall(0 , 0 , 2 , 0),
-    Wall(2 , 0 , 2 , -1),
-    Wall(2 , -1 , 4 , -1),
-    Wall(4 , -1 , 4 , 0),
-    Wall(4 , 0 , 7 , 0),
-    Wall(7 , 0, 7, -1),
-    Wall(7 , -1 , 8, -1),
-    Wall(8 , -1 , 8 , -4),
-    Wall(8 , -4, 9 , -4),
-    Wall(9 , -4, 9 , -5),
-    Wall(8, -5 , 9 , -5),
-    Wall(8, -5 , 8 , -6),
-    Wall(8 , -6, 11 , -6),
-    Wall(0 , -1, 0 , -3),
-    Wall(0 , -3, 1 , -3),
-    Wall(1 , -3, 1 , -7),
-    Wall(1, -7, 4 , -7),
-    Wall(4, -6, 4 , -7),
-    Wall(4, -6, 7, -6),
-    Wall(7, -6, 7 , -7),
-    Wall(7, -7, 11, -7),
-    Wall(2 , -3, 3, -3),
-    Wall(3, -3, 3, -2),
-    Wall(3, -2, 4, -2),
-    Wall(4, -2, 4, -3),
-    Wall(4, -3, 7, -3),
-    Wall(7, -3, 7, -5),
-    Wall(4, -5, 7, -5),
-    Wall(4, -4, 4, -5),
-    Wall(2, -4, 4, -4),
-    Wall(2, -3, 2, -4),
-    Wall(1, -1, 2, -1),
-    Wall(2, -1, 2, -2),
-    Wall(2, -2, 1, -2),
-    Wall(1, -2, 1, -1),
-    Wall(5, -1, 6, -1),
-    Wall(6, -1, 6, -2),
-    Wall(6, -2, 5, -2),
-    Wall(5, -2, 5, -1),
-    Wall(2, -5, 3, -5),
-    Wall(3, -5, 3, -6),
-    Wall(3, -6, 2, -6),
-    Wall(2, -6, 2, -5)
-]).scale(WALL_LENGTH)
-
 class SimRobotState:
+    """
+    Represents the state of the robot in the simulation, including its
+    pose, wheel velocities, wheel positions, ultrasonic sensor readings, and
+    time.
+    """
     def __init__(self):
-        self.pose = Pose2d(0, 0, 0)
+        self.pose = Pose2d(0.2, 0.2, 0)
 
         self.left_wheel_velocity = 0
         self.right_wheel_velocity = 0
@@ -107,9 +72,9 @@ class SimRobotState:
         self.left_wheel_position = 0
         self.right_wheel_position = 0
 
-        self.front_ultrasonic_distance = 255
-        self.left_front_ultrasonic_distance = 255
-        self.left_back_ultrasonic_distance = 255
+        self.front_ultrasonic_distance = +math.inf
+        self.left_front_ultrasonic_distance = +math.inf
+        self.left_back_ultrasonic_distance = +math.inf
 
         self.time = 0
 
@@ -150,6 +115,10 @@ class SimRobotState:
         return self.pose
     
 def ultrasonic_distance(pose: Pose2d, ultrasonic: Ultrasonic, environment: Environment) -> float:
+    """
+    Returns the distance from the ultrasonic sensor to the closest wall in the
+    environment.
+    """
     min_distance = float('inf')
 
     # https://www.desmos.com/calculator/qxbd0xj5ar
