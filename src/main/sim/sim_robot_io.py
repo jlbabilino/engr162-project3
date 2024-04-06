@@ -9,7 +9,8 @@ import math
 import time as _time # Avoid name conflict with time module
 
 import constants
-from sim.sim_manager import SimRobotState, Environment, Wall, Ultrasonic, sim_environment, WALL_LENGTH
+from sim.sim_util import SimRobotState, Environment, Wall, Ultrasonic
+import sim.sim_environments as envs
 
 fig, ax = plt.subplots()
 
@@ -23,12 +24,12 @@ ax.set_ylim(-1, 1)
 
 ax.grid(True)
 
-NUM_GRIDLINES_QUADRANT = 7
-ticks = [x * WALL_LENGTH for x in range(-NUM_GRIDLINES_QUADRANT,
-                                        +NUM_GRIDLINES_QUADRANT)]
+# NUM_GRIDLINES_QUADRANT = 7
+# ticks = [x * WALL_LENGTH for x in range(-NUM_GRIDLINES_QUADRANT,
+#                                         +NUM_GRIDLINES_QUADRANT)]
 
-ax.set_xticks(ticks)
-ax.set_yticks(ticks)
+# ax.set_xticks(ticks)
+# ax.set_yticks(ticks)
 
 # Keep track of timestamp robot starts at
 _initial_time = 0.0
@@ -39,6 +40,8 @@ ultrasonic_markers = []
 # for ultrasonic in [front_ultrasonic, left_front_ultrasonic, left_back_ultrasonic]:
 #     ultrasonic_markers.append(plt.Line2D([0, ultrasonic.x_offset], [0, ultrasonic.y_offset], color='red'))
 #     ax.add_line(ultrasonic_markers[-1])
+
+sim_environment = envs.old_maze_environment
 
 wall_markers = []
 
