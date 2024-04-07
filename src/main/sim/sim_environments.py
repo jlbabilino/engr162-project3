@@ -2,7 +2,7 @@ from sim.sim_util import Environment, Wall
 
 WALL_LENGTH = 0.4
 
-old_maze_environment = Environment([
+OLD_MAZE_ENVIRONMENT = Environment([
     Wall(0,  0,  2,  0),
     Wall(2,  0,  2, -1),
     Wall(2, -1,  4, -1),
@@ -47,3 +47,8 @@ old_maze_environment = Environment([
     Wall(3, -6,  2, -6),
     Wall(2, -6,  2, -5)
 ]).scale(WALL_LENGTH)
+
+"""
+Environment to be used in the simulation.
+"""
+SIM_ENVIRONMENT = OLD_MAZE_ENVIRONMENT
