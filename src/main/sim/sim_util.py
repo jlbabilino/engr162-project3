@@ -8,7 +8,7 @@ from enum import Enum
 import math
 
 import constants
-from util import DriveWheelPositions, Pose2d
+from util import DriveWheelPositions, Pose2d, Transform2d, Translation2d
 from kinematics import forward_kinematics
 
 @dataclass
@@ -135,6 +135,10 @@ def ultrasonic_distance(pose: Pose2d, ultrasonic: Ultrasonic, environment: Envir
         w_2x = wall.x2
         w_2y = wall.y2
 
+        u_px = (pose.x + ultrasonic.x_offset * math.cos(pose.heading) 
+                       - ultrasonic.y_offset * math.sin(pose.heading))
+        u_py = (pose.y + ultrasonic.x_offset * math.sin(pose.heading)
+                       + ultrasonic.y_offset * math.cos(pose.heading))
 
         u_theta = pose.heading + ultrasonic.heading_offset
 
