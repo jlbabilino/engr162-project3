@@ -34,6 +34,6 @@ class StraightUntilWallState:
             else:
                 print("StraightUntilWallState: Decided to make a left turn")
                 self.target_heading += math.radians(90)
-            return sts.turn_then_straight_state.TurnThenStraightState(self.robot, self.target_heading)
+            return sts.TurnThenStraightState(self.robot, self.target_heading)
         else:
             return self
