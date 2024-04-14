@@ -14,7 +14,8 @@ import commands.sequential_command
 # actions = ["f", "r", "f", "f", "l"]
 # actions = ["f", "f", "f"]
 
-actions = ["f", "l", "f", "l", "o", "f"]
+actions = ["f", "r", "f", "l", "f", "l", "r", "f", "r", "l", "f", "f", "r", "f", "f", "f", "l", "f", "f", "f"]
+# actions = ["p", "p"]
 
 class GridNavHardcode:
     """
@@ -33,6 +34,10 @@ class GridNavHardcode:
                 curr_angle -= math.radians(90)
             elif action == "o":
                 curr_angle += math.radians(180)
+            elif action == "p":
+                curr_angle += math.radians(15)
+                self.commands.append(commands.point_turn_command.PointTurnCommand(self.robot, curr_angle))
+                continue
             self.commands.append(commands.point_turn_command.PointTurnCommand(self.robot, curr_angle))
             self.commands.append(commands.drive_forward_command.DriveForwardCommand(self.robot, curr_angle, 0.4))
             self.commands.append(commands.wait_command.WaitCommand(1))

@@ -1,6 +1,38 @@
-from sim.sim_util import Environment, Wall
+
+from __future__ import annotations
+from dataclasses import dataclass
+import sim.sim_util as su
 
 WALL_LENGTH = 0.4
+
+@dataclass
+class Wall:
+    """
+    Represents a wall in the 2D maze environment
+    """
+    x1: float
+    y1: float
+    x2: float
+    y2: float
+
+    def scale(self, factor: float) -> Wall:
+        return Wall(self.x1 * factor, 
+                    self.y1 * factor,
+                    self.x2 * factor,
+                    self.y2 * factor)
+
+class Environment:
+    """
+    Represents the environment the robot is in, with walls and obstacles
+    """
+    def __init__(self, walls: list):
+        self.walls = walls
+
+    def get_walls(self) -> list[Wall]:
+        return self.walls
+
+    def scale(self, factor: float) -> Environment:
+        return Environment([wall.scale(factor) for wall in self.walls])
 
 OLD_MAZE_ENVIRONMENT = Environment([
     Wall(0,  0,  2,  0),
