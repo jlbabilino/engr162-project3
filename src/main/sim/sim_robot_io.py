@@ -7,7 +7,6 @@ state and environment.
 import time as _time # Avoid name conflict with time module
 
 from sim.sim_util import SimRobotState
-import sim.sim_environments as envs
 import sim.sim_visualization as viz
 
 # Keep track of timestamp robot starts at
@@ -29,18 +28,25 @@ def periodic():
 def shutdown():
     pass
 
+def front_ultrasonic_distance() -> float:
+    global sim_robot_state
+    return sim_robot_state.front_ultrasonic_distance[0]
+
 def left_front_ultrasonic_distance() -> float:
-    return 100
+    global sim_robot_state
+    return sim_robot_state.ultrasonic_distances[1]
 
 def left_back_ultrasonic_distance() -> float:
-    return 100
+    global sim_robot_state
+    return sim_robot_state.ultrasonic_distances[2]
 
-def front_ultrasonic_distance() -> float:
-    return 100
+def right_ultrosonic_distance() -> float:
+    global sim_robot_state
+    return sim_robot_state.ultrasonic_distances[3]
 
 def gyro_angle() -> bool:
     global sim_robot_state
-    return sim_robot_state.get_pose().heading
+    return sim_robot_state.pose.heading
 
 def magnetic_obstacle_detected() -> bool:
     return False
@@ -58,12 +64,12 @@ def time() -> float:
 def set_drive_left_speed(wheel_tangential_velocity: float):
     global sim_robot_state
 
-    sim_robot_state.set_left_wheel_velocity(wheel_tangential_velocity)
+    sim_robot_state.left_wheel_velocity = wheel_tangential_velocity
 
 def set_drive_right_speed(wheel_tangential_velocity: float):
     global sim_robot_state
 
-    sim_robot_state.set_right_wheel_velocity(wheel_tangential_velocity)
+    sim_robot_state.right_wheel_velocity = wheel_tangential_velocity
 
 def print_telemetry():
     ...
