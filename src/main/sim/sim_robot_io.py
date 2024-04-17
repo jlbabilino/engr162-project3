@@ -4,6 +4,7 @@ replacement for real_robot_io.py. Uses matplotlib to visualize the robot's
 state and environment.
 """
 
+import math
 import time as _time # Avoid name conflict with time module
 
 from sim.sim_util import SimRobotState
@@ -30,7 +31,7 @@ def shutdown():
 
 def front_ultrasonic_distance() -> float:
     global sim_robot_state
-    return sim_robot_state.front_ultrasonic_distance[0]
+    return sim_robot_state.ultrasonic_distances[0]
 
 def left_front_ultrasonic_distance() -> float:
     global sim_robot_state
@@ -40,7 +41,7 @@ def left_back_ultrasonic_distance() -> float:
     global sim_robot_state
     return sim_robot_state.ultrasonic_distances[2]
 
-def right_ultrosonic_distance() -> float:
+def right_ultrasonic_distance() -> float:
     global sim_robot_state
     return sim_robot_state.ultrasonic_distances[3]
 

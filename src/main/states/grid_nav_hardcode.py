@@ -6,15 +6,21 @@ from robot_io import io
 import states.idle_state
 
 import commands.drive_forward_command
-import commands.point_turn_command
+import commands.turn_to_cardinal_direction_command as tcd
 import commands.wait_command
 import commands.sequential_command
+import commands.detect_surroundings_command
+
+from util import CardinalDirection
 
 # actions = ["f", "l", "l", "l", "f"]
 # actions = ["f", "r", "f", "f", "l"]
 # actions = ["f", "f", "f"]
 
-actions = ["f", "r", "f", "l", "f", "l", "r", "f", "r", "l", "f", "f", "r", "f", "f", "f", "l", "f", "f", "f"]
+actions = ["r", "r", "l", "d", "d", "r", "r", "u", "r", "r", "d", "r", "r",
+           "r", "u", "l", "u", "l", "l", "d", "l", "l", "d", "l", "d", "d",
+           "d", "d", "r", "r", "u", "u", "l", "r", "d", "r", "r", "r", "r",
+           "u", "u", "d", "r", "l", "d", "d", "r", "r", "r", "r"]
 # actions = ["p", "p"]
 
 class GridNavHardcode:
@@ -26,21 +32,20 @@ class GridNavHardcode:
         self.robot = robot
         self.commands = []
 
-        curr_angle = 0.0
         for action in actions:
+            direction = None
             if action == "l":
-                curr_angle += math.radians(90)
+                direction = CardinalDirection.LEFT
             elif action == "r":
-                curr_angle -= math.radians(90)
-            elif action == "o":
-                curr_angle += math.radians(180)
-            elif action == "p":
-                curr_angle += math.radians(15)
-                self.commands.append(commands.point_turn_command.PointTurnCommand(self.robot, curr_angle))
-                continue
-            self.commands.append(commands.point_turn_command.PointTurnCommand(self.robot, curr_angle))
-            self.commands.append(commands.drive_forward_command.DriveForwardCommand(self.robot, curr_angle, 0.4))
+                direction = CardinalDirection.RIGHT
+            elif action == "u":
+                direction = CardinalDirection.UP
+            elif action == "d":
+                direction = CardinalDirection.DOWN
+            self.commands.append(tcd.TurnToCardinalDirectionCommand(self.robot, direction))
+            self.commands.append(commands.drive_forward_command.DriveForwardCommand(self.robot, direction.to_angle(), 0.4))
             self.commands.append(commands.wait_command.WaitCommand(1))
+            self.commands.append(commands.detect_surroundings_command.DetectSurroundingsCommand(self.robot))
 
         self.command = commands.sequential_command.SequentialCommand(self.commands)
 

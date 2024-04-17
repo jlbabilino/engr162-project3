@@ -1,4 +1,6 @@
+from __future__ import annotations
 import math
+from enum import Enum
 from dataclasses import dataclass
 
 @dataclass
@@ -42,3 +44,34 @@ class Pose2d:
                    + dy * math.cos(self.heading),
             self.heading + theta
         )
+
+class CardinalDirection(Enum):
+    RIGHT = 0
+    UP = 1
+    DOWN = -1
+    LEFT = 2
+
+    def to_angle(self) -> float:
+        if self == CardinalDirection.LEFT:
+            return math.pi
+        elif self == CardinalDirection.RIGHT:
+            return 0
+        elif self == CardinalDirection.UP:
+            return math.pi / 2
+        elif self == CardinalDirection.DOWN:
+            return -math.pi / 2
+        
+    def add(self, other_direction: CardinalDirection) -> CardinalDirection:
+        """
+        Adds two cardinal directions together.
+        """
+
+        angle_sum = self.value + other_direction.value
+        if angle_sum == -2:
+            return CardinalDirection.LEFT
+        elif angle_sum == 3:
+            return CardinalDirection.DOWN
+        elif angle_sum == 4:
+            return CardinalDirection.RIGHT
+        else:
+            return CardinalDirection(angle_sum)

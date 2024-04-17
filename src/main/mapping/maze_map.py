@@ -1,6 +1,16 @@
 from dataclasses import dataclass
 from typing import Optional
 from enum import Enum
+from util import CardinalDirection
+
+@dataclass
+class DetectedHazard:
+    """
+    Represents a detected hazard in the maze.
+    """
+    hazard_type: str
+    parameter_of_interest: str
+    parameter_value: float
 
 class MazeMapCellType(Enum):
     VISITED = 1
@@ -12,10 +22,12 @@ class MazeMapCellType(Enum):
 
 @dataclass
 class MazeMapCell:
-    left_wall: bool = False
-    bottom_wall: bool = False
+    left_wall: Optional[bool] = None
+    bottom_wall: Optional[bool] = None
 
     cell_type: MazeMapCellType = MazeMapCellType.NOT_VISITED
+
+    hazard: Optional[DetectedHazard] = None
 
 class MazeMap:
     def __init__(self):
@@ -33,9 +45,22 @@ class MazeMap:
 
         self.maze_map[0][0].cell_type = MazeMapCellType.STARTING_POINT
 
-    def set_cell_type(self, x: int, y: int, cell_type: MazeMapCellType):
-        self.maze_map[y][x].cell_type = cell_type
+        self.maze_map[0][0].left_wall = True
+        self.maze_map[0][0].bottom_wall = True
+        self.maze_map[1][0].bottom_wall = True
 
+        self.maze_path = []
+
+    def optimal_next_move(self, x: int, y: int) -> tuple[CardinalDirection, bool]:
+        """
+        Given the current position, return the optimal next move to make. The
+        boolean value indicates whether the next cell is known to be safe to
+        move to, meaning it is known that there is no wall or obstacle in the
+        way.
+        """
+        return CardinalDirection.RIGHT, True
+
+    def expand_map(self, x: int, y: int):
         self.x_min = min(self.x_min, x)
         self.x_max = max(self.x_max, x)
         self.y_min = min(self.y_min, y)
@@ -50,6 +75,18 @@ class MazeMap:
     def set_top_wall(self, x: int, y: int, exists: bool):
         self.maze_map[y + 1][x].bottom_wall = exists
 
+    def set_wall(self, x: int, y: int, direction: CardinalDirection, exists: bool):
+        if direction == CardinalDirection.LEFT:
+            self.set_left_wall(x, y, exists)
+        elif direction == CardinalDirection.RIGHT:
+            self.set_right_wall(x, y, exists)
+        elif direction == CardinalDirection.UP:
+            self.set_top_wall(x, y, exists)
+        elif direction == CardinalDirection.DOWN:
+            self.set_bottom_wall(x, y, exists)
+
+        self.expand_map(x, y)
+
     def get_bottom_wall(self, x: int, y: int):
         return self.maze_map[y][x].bottom_wall
     def get_left_wall(self, x: int, y: int):
@@ -58,26 +95,33 @@ class MazeMap:
         return self.maze_map[y][x + 1].left_wall
     def get_top_wall(self, x: int, y: int):
         return self.maze_map[y + 1][x].bottom_wall
+    
+    def get_wall(self, x: int, y: int, direction: CardinalDirection):
+        if direction == CardinalDirection.LEFT:
+            return self.get_left_wall(x, y)
+        elif direction == CardinalDirection.RIGHT:
+            return self.get_right_wall(x, y)
+        elif direction == CardinalDirection.UP:
+            return self.get_top_wall(x, y)
+        elif direction == CardinalDirection.DOWN:
+            return self.get_bottom_wall(x, y)
 
-    def update_visited_cell(self, x, y,
-                            left_wall: Optional[bool] = None,
-                            bottom_wall: Optional[bool] = None,
-                            right_wall: Optional[bool] = None,
-                            top_wall: Optional[bool] = None):
+    def update_visited_cell(self, x, y):
         """
         Update the cell at (x, y) with the given walls. Sets the cell as
         visited.
         """
-        self.set_cell_type(x, y, MazeMapCellType.VISITED)
+        self.maze_map[y][x].cell_type = MazeMapCellType.VISITED
 
-        if left_wall is not None:
-            self.set_left_wall(x, y, left_wall)
-        if bottom_wall is not None:
-            self.set_bottom_wall(x, y, bottom_wall)
-        if right_wall is not None:
-            self.set_right_wall(x, y, right_wall)
-        if top_wall is not None:
-            self.set_top_wall(x, y, top_wall)
+        self.expand_map(x, y)
+
+    def update_hazard_cell(self, x, y, hazard: DetectedHazard):
+        """
+        Update the cell at (x, y) with the given hazard.
+        """
+        self.maze_map[y][x].hazard = hazard
+
+        self.expand_map(x, y)
 
     def print(self):
         print("Team: 40")
