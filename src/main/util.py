@@ -61,7 +61,17 @@ class CardinalDirection(Enum):
 
         angle_sum = self.value + other_direction.value
         return IntAngle(angle_sum).to_cardinal_direction()
-        
+
+    def reverse(self) -> CardinalDirection:
+        if self == CardinalDirection.RIGHT:
+            return CardinalDirection.LEFT
+        elif self == CardinalDirection.UP:
+            return CardinalDirection.DOWN
+        elif self == CardinalDirection.LEFT:
+            return CardinalDirection.RIGHT
+        elif self == CardinalDirection.DOWN:
+            return CardinalDirection.UP
+
     def to_int_angle(self) -> IntAngle:
         return IntAngle(self.value)
 

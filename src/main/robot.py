@@ -13,6 +13,7 @@ class Robot:
         self.heading_offset = 0.0
         self.heading_int_angle = IntAngle(0)
         self.coords = MazeCoords(0, 0)
+        self.path = []
         self.maze_map = MazeMap()
 
     def initialize(self):

@@ -48,7 +48,10 @@ class MazeDecision:
     """
     Whether the robot has reached the exit.
     """
-
+    should_backtrack: bool
+    """
+    Whether or not the robot should go back to the previous cell.
+    """
 class MazeMap:
     def __init__(self):
         self.x_min = 0
@@ -71,17 +74,18 @@ class MazeMap:
 
         self.maze_path = []
 
-    def optimal_next_move(self, x: int, y: int, path: list[tuple[int, int]]) -> MazeDecision:
+    def optimal_next_move(self, x: int, y: int, path: list[CardinalDirection]) -> MazeDecision:
         """
         Given the current position, return the optimal next move to make. The
         boolean value indicates whether the next cell is known to be safe to
         move to, meaning it is known that there is no wall or obstacle in the
         way.
         """
+        print(f"path: {path}")
         potential_directions = []
-        for direction in (CardinalDirection.DOWN,
+        for direction in (CardinalDirection.RIGHT,
                           CardinalDirection.UP,
-                          CardinalDirection.RIGHT,
+                          CardinalDirection.DOWN,
                           CardinalDirection.LEFT):
             if self.get_wall(x, y, direction) is False:
                 potential_directions.append(direction)
@@ -93,9 +97,11 @@ class MazeMap:
                 good_directions.append(direction)
 
         if len(good_directions) > 0:
-            return MazeDecision(good_directions[0], True, False)
+            return MazeDecision(good_directions[0], True, False, False)
+        elif len(path) > 0:
+            return MazeDecision(path[-1].reverse(), True, False, True)
         else:
-            return MazeDecision(None, False, False)
+            return MazeDecision(None, False, False, False)
 
     def expand_map(self, x: int, y: int):
         self.x_min = min(self.x_min, x)

@@ -15,7 +15,7 @@ class DecideNextMoveState:
     def execute(self):
         x = self.robot.coords.x
         y = self.robot.coords.y
-        decision = self.robot.maze_map.optimal_next_move(x, y, [])
+        decision = self.robot.maze_map.optimal_next_move(x, y, self.robot.path)
         if decision.is_exit:
             print("Exit found!")
             return ids.IdleState(self.robot)
@@ -24,10 +24,15 @@ class DecideNextMoveState:
             return ids.IdleState(self.robot)
         elif decision.is_safe:
             print(f"Moving {decision.direction.name}")
+            if decision.should_backtrack:
+                print("Backtracking...")
+                self.robot.path.pop()
+            else:
+                self.robot.path.append(decision.direction)
             return cts.CommandThenStateState(
                     sc.SequentialCommand([
                         ttc.TurnToCardinalDirectionCommand(self.robot, decision.direction),
-                        dicdc.DriveInCardinalDirectionCommand(self.robot, decision.direction)]),
+                        dicdc.DriveInCardinalDirectionCommand(self.robot)]),
                     dss.DetectSurroundingsState(self.robot))
         else:
             return cts.CommandThenStateState(
