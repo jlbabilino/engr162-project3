@@ -26,7 +26,7 @@ class CalibrateHeadingWallCommand:
 
         error = d1 - d2
 
-        K = 10
+        K = 6
         io.set_drive_left_speed(K * error)
         io.set_drive_right_speed(-K * error)
 
