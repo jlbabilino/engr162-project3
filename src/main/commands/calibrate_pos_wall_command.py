@@ -4,6 +4,8 @@ import constants
 from robot import Robot
 from robot_io import io
 
+from timer import Timer
+
 class CalibratePosWallCommand:
     """
     Command to calibrate with a wall in front of the robot by driving forward
@@ -13,8 +15,10 @@ class CalibratePosWallCommand:
     def __init__(self, robot: Robot):
         self.robot = robot
 
+        self.timer = Timer()
+
     def initialize(self):
-        pass
+        self.timer.start()
 
     def execute(self) -> bool:
         d = io.front_ultrasonic_distance()
@@ -28,11 +32,11 @@ class CalibratePosWallCommand:
 
         error = TARGET - d
 
-        K = 1
+        K = 2
         io.set_drive_left_speed(-K * error)
         io.set_drive_right_speed(-K * error)
 
-        if abs(error) < 0.01:
+        if abs(error) < 0.01 or self.timer.has_elapsed(1):
             io.set_drive_left_speed(0)
             io.set_drive_right_speed(0)
             return True
