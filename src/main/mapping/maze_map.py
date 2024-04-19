@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, List
 from enum import Enum
 from util import CardinalDirection, MazeCoords
 
@@ -74,7 +74,7 @@ class MazeMap:
 
         self.maze_path = []
 
-    def optimal_next_move(self, x: int, y: int, path: list[CardinalDirection]) -> MazeDecision:
+    def optimal_next_move(self, x: int, y: int, path: List[CardinalDirection]) -> MazeDecision:
         """
         Given the current position, return the optimal next move to make. The
         boolean value indicates whether the next cell is known to be safe to

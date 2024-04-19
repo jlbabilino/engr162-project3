@@ -22,6 +22,7 @@ FRONT_ULTRASONIC_PORT = BP.PORT_4
 # GrovePi Sensor Ports
 LEFT_FRONT_ULTRASONIC_PORT = 3
 LEFT_BACK_ULTRASONIC_PORT = 2
+RIGHT_ULTRASONIC_PORT = 4
 IR_LEFT_PORT = 15 # These are for port A0
 IR_RIGHT_PORT = 14
 
@@ -90,6 +91,12 @@ def front_ultrasonic_distance() -> float:
             return BP.get_sensor(FRONT_ULTRASONIC_PORT) / 100 # cm -> m
         except brickpi3.SensorError as error:
             pass
+
+def right_ultrasonic_distance() -> float:
+    """
+    Returns the distance in meters from the left back ultrasonic sensor
+    """
+    return grovepi.ultrasonicRead(RIGHT_ULTRASONIC_PORT) / 100 # cm -> m
 
 
 def gyro_angle() -> bool:
@@ -176,6 +183,7 @@ def print_telemetry():
           f"lf_us_d: {left_front_ultrasonic_distance():6.3f} m, "
           f"lb_us_d: {left_back_ultrasonic_distance():6.3f} m, "
           f"f_us_d{front_ultrasonic_distance():6.3f} m, "
+          f"r_us_d: {right_ultrasonic_distance():6.3f} m, "
           f"gyro: {math.degrees(gyro_angle()):6.3f} deg, "
           f"mag_obs? {magnetic_obstacle_detected():2}, "
           f"ir_obs? {ir_obstacle_detected():2}, "
