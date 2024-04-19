@@ -19,8 +19,6 @@ class DriveInCardinalDirectionCommand:
         self.target_heading = self.robot.get_heading_int_angle().to_angle()
         self.target_direction = self.robot.get_direction()
 
-        print(f"Driving in direction: {self.target_direction.name}")
-
         dist = constants.WALL_DISTANCE
         if self.reverse:
             dist = -dist

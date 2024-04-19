@@ -15,10 +15,6 @@ class DetectSurroundingsCommand:
         pass
 
     def execute(self):
-        # REMOVE THIS LATER
-        # self.robot.x_coord += int(math.cos(self.robot.get_direction().to_angle()))
-        # self.robot.y_coord += int(math.sin(self.robot.get_direction().to_angle()))
-        # self.robot.maze_map.update_visited_cell(self.robot.x_coord, self.robot.y_coord)
         distances = {}
         distances[CardinalDirection.RIGHT] = (
                 io.front_ultrasonic_distance()
@@ -30,8 +26,6 @@ class DetectSurroundingsCommand:
                 0.5 * (io.left_front_ultrasonic_distance()
                      + io.left_back_ultrasonic_distance())
                      + constants.SIDE_ULTRASONIC_OFFSET)
-        
-        print(distances)
 
         for direction, distance in distances.items():
             global_direction = self.robot.get_direction().plus(direction)
@@ -40,11 +34,9 @@ class DetectSurroundingsCommand:
                         self.robot.coords.y,
                         global_direction) == None:
                 if distance < constants.WALL_DISTANCE:
-                    print("Detected wall at", direction, global_direction)
                     self.robot.maze_map.set_wall(
                             self.robot.coords.x, self.robot.coords.y, global_direction, True)
                 else:
-                    print("No wall detected at", direction, global_direction)
                     self.robot.maze_map.set_wall(
                             self.robot.coords.x, self.robot.coords.y, global_direction, False)
 
