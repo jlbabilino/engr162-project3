@@ -80,7 +80,37 @@ OLD_MAZE_ENVIRONMENT = Environment([
     Wall(2, -6,  2, -5)
 ]).scale(WALL_LENGTH)
 
+DIFFICULT_ENVIRONEMENT = Environment([
+    Wall(0,0,2,0),
+    Wall(2,0,2,-2),
+    Wall(1,-2,2,-2),
+    Wall(1,-1,1,-3),
+    Wall(1,-1,2,-1),
+    Wall(0,-1,0,-4),
+    Wall(0,-4,1,-4),
+    Wall(1,-4,1,-6),
+    Wall(1,-6,4,-6),
+    Wall(4,-3, 4, -6),
+    Wall(3,-4, 4, -4),
+    Wall(2,-4,2,-5),
+    Wall(2,-5,3,-5),
+    Wall(3,-4,3,-5),
+    Wall(1,-3,3,-3),
+    Wall(3,-2,3,-3),
+    Wall(2,-1,5,-1),
+    Wall(5,-1,5,-2),
+    Wall(5,-2,6,-2),
+    Wall(6,-2,6,-3),
+    Wall(6,-3,7,-3),
+    Wall(4, -3, 5, -3),
+    Wall(5, -3, 5, -5),
+    Wall(5,-5,6,-5),
+    Wall(6,-4,6,-5),
+    Wall(6,-4,7,-4)
+    ]).scale(WALL_LENGTH)
+
+
 """
 Environment to be used in the simulation.
 """
-SIM_ENVIRONMENT = OLD_MAZE_ENVIRONMENT
+SIM_ENVIRONMENT = DIFFICULT_ENVIRONEMENT
