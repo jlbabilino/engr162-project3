@@ -31,9 +31,6 @@ class DriveForwardCommand:
     def initialize(self):
         self.timer.start()
 
-        print("DriveForwardCommand: Initialized")
-        print(f"DriveForwardCommand: Distance = {self.distance:.3f} m")
-
     def execute(self) -> bool:
         error = self.robot.get_heading() - self.target_heading
 
@@ -41,7 +38,6 @@ class DriveForwardCommand:
         io.set_drive_right_speed(self.velocity - 0.5 * error)
 
         if self.timer.has_elapsed(self.drive_time):
-            print(f"DriveForwardCommand: Done in {self.drive_time:.3f} s")
             io.set_drive_left_speed(0)
             io.set_drive_right_speed(0)
             return True
