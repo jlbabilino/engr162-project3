@@ -35,15 +35,15 @@ def front_ultrasonic_distance() -> float:
 
 def left_front_ultrasonic_distance() -> float:
     global sim_robot_state
-    return sim_robot_state.ultrasonic_distances[1]
+    return round(sim_robot_state.ultrasonic_distances[1], 2)
 
 def left_back_ultrasonic_distance() -> float:
     global sim_robot_state
-    return sim_robot_state.ultrasonic_distances[2]
+    return round(sim_robot_state.ultrasonic_distances[2], 2)
 
 def right_ultrasonic_distance() -> float:
     global sim_robot_state
-    return sim_robot_state.ultrasonic_distances[3]
+    return round(sim_robot_state.ultrasonic_distances[3], 2)
 
 def gyro_angle() -> bool:
     global sim_robot_state
@@ -59,7 +59,7 @@ def time() -> float:
     """
     Returns the time in seconds since the robot started
     """
-    return (_time.time() - _initial_time)*5
+    return (_time.time() - _initial_time)*3
 
 # OUTPUTS
 def set_drive_left_speed(wheel_tangential_velocity: float):
