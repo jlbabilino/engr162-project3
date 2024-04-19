@@ -11,8 +11,9 @@ class DriveInCardinalDirectionCommand:
     """
     Command to drive the robot in a cardinal direction, one grid space (40 cm)
     """
-    def __init__(self, robot: Robot):
+    def __init__(self, robot: Robot, reverse: bool = False):
         self.robot = robot
+        self.reverse = reverse
 
     def initialize(self):
         self.target_heading = self.robot.get_heading_int_angle().to_angle()
@@ -20,11 +21,20 @@ class DriveInCardinalDirectionCommand:
 
         print(f"Driving in direction: {self.target_direction.name}")
 
+        dist = constants.WALL_DISTANCE
+        if self.reverse:
+            dist = -dist
+
         self.drive_command = dfc.DriveForwardCommand(
-                self.robot, self.target_heading, constants.WALL_DISTANCE)
+                self.robot, self.target_heading, dist)
+
         def update_coords():
-            self.robot.set_maze_coords(self.robot.get_maze_coords().move(self.target_direction))
+            move_dir = self.target_direction
+            if self.reverse:
+                move_dir = move_dir.reverse()
+            self.robot.set_maze_coords(self.robot.get_maze_coords().move(move_dir))
             self.robot.maze_map.update_visited_cell(self.robot.get_maze_coords().x, self.robot.get_maze_coords().y)
+
         self.set_coords_command = lc.LambdaCommand(update_coords)
         self.seq_command = sc.SequentialCommand([self.drive_command, self.set_coords_command])
 

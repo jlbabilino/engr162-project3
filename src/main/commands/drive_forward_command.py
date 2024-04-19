@@ -1,3 +1,5 @@
+import math
+
 from robot import Robot
 from robot_io import io
 from timer import Timer
@@ -20,7 +22,7 @@ class DriveForwardCommand:
         self.target_heading = target_heading
         self.distance = distance
         
-        self.velocity = 0.06
+        self.velocity = math.copysign(0.06, self.distance)
         
         self.drive_time = self.distance / self.velocity
 

@@ -2,7 +2,7 @@ from robot import Robot
 
 from util import CardinalDirection
 
-import commands.drive_in_cardinal_direction_command as dicdc
+import commands.drive_forward_command as dfc
 import commands.turn_to_cardinal_direction_command as ttc
 import commands.sequential_command as sc
 
@@ -13,9 +13,8 @@ class TestState:
         self.robot = robot
 
         self.command = sc.SequentialCommand([
-            dicdc.DriveInCardinalDirectionCommand(robot),
-            ttc.TurnToCardinalDirectionCommand(robot, CardinalDirection.UP),
-            dicdc.DriveInCardinalDirectionCommand(robot),
+            ttc.TurnToCardinalDirectionCommand(self.robot, CardinalDirection.UP),
+            dfc.DriveForwardCommand(self.robot, 3.141592/2, +0.40),
         ])
         self.command.initialize()
 

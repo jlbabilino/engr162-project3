@@ -29,11 +29,21 @@ class DecideNextMoveState:
                 self.robot.path.pop()
             else:
                 self.robot.path.append(decision.direction)
-            return cts.CommandThenStateState(
-                    sc.SequentialCommand([
-                        ttc.TurnToCardinalDirectionCommand(self.robot, decision.direction),
-                        dicdc.DriveInCardinalDirectionCommand(self.robot)]),
-                    dss.DetectSurroundingsState(self.robot))
+
+            if decision.direction == self.robot.get_direction():
+                return cts.CommandThenStateState(
+                        dicdc.DriveInCardinalDirectionCommand(self.robot, False),
+                        dss.DetectSurroundingsState(self.robot))
+            elif decision.direction == self.robot.get_direction().reverse():
+                return cts.CommandThenStateState(
+                        dicdc.DriveInCardinalDirectionCommand(self.robot, True),
+                        dss.DetectSurroundingsState(self.robot))
+            else:
+                return cts.CommandThenStateState(
+                        sc.SequentialCommand([
+                            ttc.TurnToCardinalDirectionCommand(self.robot, decision.direction),
+                            dicdc.DriveInCardinalDirectionCommand(self.robot)]),
+                        dss.DetectSurroundingsState(self.robot))
         else:
             return cts.CommandThenStateState(
                     ttc.TurnToCardinalDirectionCommand(self.robot, decision.direction),
