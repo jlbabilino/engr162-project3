@@ -109,8 +109,24 @@ DIFFICULT_ENVIRONEMENT = Environment([
     Wall(6,-4,7,-4)
     ]).scale(WALL_LENGTH)
 
+OFFICE_HOURS_MAZE1 = Environment([
+    Wall(0,0,1,0),
+    Wall(1,0,1,1),
+    Wall(1,1,3,1),
+    Wall(3,1,3,0),
+    Wall(3,0,2,0),
+    Wall(2,0,2,-3),
+    Wall(2,-3,3,-3),
+    Wall(3,-3,3,-4),
+    Wall(3,-4,0,-4),
+    Wall(0,-3,1,-3),
+    Wall(1,-1,1,-3),
+    Wall(0,-1,1,-1)
+
+]).scale(WALL_LENGTH)
+
 
 """
 Environment to be used in the simulation.
 """
-SIM_ENVIRONMENT = DIFFICULT_ENVIRONEMENT
+SIM_ENVIRONMENT = OFFICE_HOURS_MAZE1
