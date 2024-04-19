@@ -1,4 +1,6 @@
+from __future__ import annotations
 import math
+from enum import Enum
 from dataclasses import dataclass
 
 @dataclass
@@ -42,3 +44,96 @@ class Pose2d:
                    + dy * math.cos(self.heading),
             self.heading + theta
         )
+
+class CardinalDirection(Enum):
+    RIGHT = 0
+    UP = 1
+    DOWN = -1
+    LEFT = 2
+
+    def to_angle(self) -> float:
+        return self.to_int_angle().to_angle()
+        
+    def plus(self, other_direction: CardinalDirection) -> CardinalDirection:
+        """
+        Adds two cardinal directions together.
+        """
+
+        angle_sum = self.value + other_direction.value
+        return IntAngle(angle_sum).to_cardinal_direction()
+
+    def reverse(self) -> CardinalDirection:
+        if self == CardinalDirection.RIGHT:
+            return CardinalDirection.LEFT
+        elif self == CardinalDirection.UP:
+            return CardinalDirection.DOWN
+        elif self == CardinalDirection.LEFT:
+            return CardinalDirection.RIGHT
+        elif self == CardinalDirection.DOWN:
+            return CardinalDirection.UP
+
+    def to_int_angle(self) -> IntAngle:
+        return IntAngle(self.value)
+
+    @staticmethod
+    def calc_rotation(robot: CardinalDirection, target: CardinalDirection) -> IntAngle:
+        """
+        Calculate the rotation needed to turn from the robot's current direction
+        to the target direction.
+        """
+        diff = target.value - robot.value
+
+        if diff == 3:
+            return IntAngle(-1)
+        elif diff == -3:
+            return IntAngle(1)
+        elif diff == -2:
+            return IntAngle(2)
+        else:
+            return IntAngle(diff)
+        
+@dataclass
+class IntAngle:
+    angle: int
+
+    def plus(self, other_angle: IntAngle):
+        return IntAngle(self.angle + other_angle.angle)
+    
+    def to_cardinal_direction(self) -> CardinalDirection:
+        cardinal_angle = self.angle
+
+        if (cardinal_angle < -4):
+            cardinal_angle = self.angle % -4
+        elif (cardinal_angle > +4):
+            cardinal_angle = self.angle % 4
+
+        if (cardinal_angle == -4):
+            cardinal_angle = 0
+        elif (cardinal_angle == -3):
+            cardinal_angle = 1
+        elif (cardinal_angle == -2):
+            cardinal_angle = 2
+        elif (cardinal_angle == 3):
+            cardinal_angle = -1
+        elif (cardinal_angle == 4):
+            cardinal_angle = 0
+
+        return CardinalDirection(cardinal_angle)
+    
+    def to_angle(self) -> float:
+        return self.angle * math.pi / 2
+
+@dataclass
+class MazeCoords:
+    x: int
+    y: int
+
+    def move(self, direction: CardinalDirection) -> MazeCoords:
+        if direction == CardinalDirection.RIGHT:
+            return MazeCoords(self.x + 1, self.y)
+        elif direction == CardinalDirection.UP:
+            return MazeCoords(self.x, self.y + 1)
+        elif direction == CardinalDirection.LEFT:
+            return MazeCoords(self.x - 1, self.y)
+        elif direction == CardinalDirection.DOWN:
+            return MazeCoords(self.x, self.y - 1)

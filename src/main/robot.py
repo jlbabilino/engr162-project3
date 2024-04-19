@@ -1,4 +1,7 @@
+import constants
+from util import IntAngle, MazeCoords
 from robot_io import io
+from mapping.maze_map import MazeMap
 
 class Robot:
     """
@@ -8,21 +11,35 @@ class Robot:
 
     def __init__(self):
         self.heading_offset = 0.0
-        self.target_heading = 0.0
-        pass
+        self.heading_int_angle = IntAngle(0)
+        self.coords = MazeCoords(0, 0)
+        self.path = []
+        self.maze_map = MazeMap()
 
     def initialize(self):
         self.heading_offset = io.gyro_angle()
         print("Robot: initialized")
 
+    def set_heading(self, heading: float):
+        self.heading_offset = io.gyro_angle() - heading
+
     def get_heading(self):
         return io.gyro_angle() - self.heading_offset
     
-    def set_target_heading(self, target_heading: float) -> None:
-        self.target_heading = target_heading
+    def set_heading_int_angle(self, int_angle: IntAngle):
+        self.heading_int_angle = int_angle
 
-    def get_target_heading(self) -> float:
-        return self.target_heading
+    def get_heading_int_angle(self) -> IntAngle:
+        return self.heading_int_angle
+
+    def get_direction(self):
+        return self.heading_int_angle.to_cardinal_direction()
+    
+    def set_maze_coords(self, coords: MazeCoords):
+        self.coords = coords
+    
+    def get_maze_coords(self) -> MazeCoords:
+        return self.coords
 
     def periodic(self):
         pass
