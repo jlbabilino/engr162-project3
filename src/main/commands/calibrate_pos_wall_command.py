@@ -28,7 +28,7 @@ class CalibratePosWallCommand:
 
         error = TARGET - d
 
-        K = 0.1
+        K = 1
         io.set_drive_left_speed(-K * error)
         io.set_drive_right_speed(-K * error)
 
