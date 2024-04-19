@@ -81,23 +81,36 @@ class MazeMap:
         move to, meaning it is known that there is no wall or obstacle in the
         way.
         """
-        print(f"path: {path}")
-        potential_directions = []
+        potentially_safe_directions = []
+        safe_directions = []
         for direction in (CardinalDirection.RIGHT,
                           CardinalDirection.UP,
                           CardinalDirection.DOWN,
                           CardinalDirection.LEFT):
-            if self.get_wall(x, y, direction) is False:
-                potential_directions.append(direction)
-
-        good_directions = []
-        for direction in potential_directions:
+            if len(path) > 0 and direction == path[-1].reverse():
+                continue
             coords = MazeCoords(x, y).move(direction)
-            if self.maze_map[coords.y][coords.x].cell_type == MazeMapCellType.NOT_VISITED:
-                good_directions.append(direction)
+            if self.maze_map[coords.y][coords.x].cell_type == MazeMapCellType.VISITED:
+                continue
+            wall = self.get_wall(x, y, direction)
+            if wall == False or wall == None:
+                potentially_safe_directions.append(direction)
+            if wall == False:
+                safe_directions.append(direction)
 
-        if len(good_directions) > 0:
-            return MazeDecision(good_directions[0], True, False, False)
+        # for direction in potentially_safe_directions:
+        #     coords = MazeCoords(x, y).move(direction)
+        #     if self.maze_map[coords.y][coords.x].cell_type == MazeMapCellType.NOT_VISITED:
+        #         safe_directions.append(direction)
+
+        print("Safe:  ", [d.name for d in safe_directions])
+        print("Safe?: ", [d.name for d in potentially_safe_directions])
+        
+
+        if len(safe_directions) > 0:
+            return MazeDecision(safe_directions[0], True, False, False)
+        elif len(potentially_safe_directions) > 0:
+            return MazeDecision(potentially_safe_directions[0], False, False, False)
         elif len(path) > 0:
             return MazeDecision(path[-1].reverse(), True, False, True)
         else:
