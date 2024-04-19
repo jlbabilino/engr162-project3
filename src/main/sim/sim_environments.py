@@ -149,7 +149,6 @@ DIFFICULT_ENVIRONEMENT_2 = Environment([
     Wall(4,-2,4,-3),
     Wall(3,-4,6,-4),
     Wall(3,-4,3,-6),
-    Wall(3,-6,2,-8),
     Wall(0,-8,1,-8),
     Wall(1,-8,1,-7),
     Wall(1,-7,5,-7),
@@ -167,7 +166,7 @@ DIFFICULT_ENVIRONEMENT_2 = Environment([
     Wall(7,-6,8,-6),
     Wall(8,-6,8,-7),
     Wall(8,-7,9,-7),
-    Wall(0,0,0,-9)
+    Wall(0,-1,0,-9)
 ]).scale(WALL_LENGTH)
 
 
