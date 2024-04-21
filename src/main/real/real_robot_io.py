@@ -128,7 +128,7 @@ def gyro_angle() -> bool:
 # Cache previous magnet reading
 _previous_magnet_reading = (0, 0, 0)
 
-def magnetic_obstacle_detected() -> bool:
+def magnetic_reading() -> float:
     """
     Check if a magnetic obstacle is in front of the robot
     """
@@ -142,16 +142,16 @@ def magnetic_obstacle_detected() -> bool:
         _previous_magnet_reading = new_magnet_reading
         # print(f"Magnet: {new_magnet_reading}")
 
-    return abs(_previous_magnet_reading[2]) >= 100
+    return _previous_magnet_reading[2]
 
-def ir_obstacle_detected() -> bool:
+def ir_reading() -> float:
     """
     Check if an IR obstacle is in front of the robot
     """
 
     avg_ir = 0.5 * (grovepi.analogRead(IR_LEFT_PORT)
                   + grovepi.analogRead(IR_RIGHT_PORT))
-    return avg_ir >= 110
+    return avg_ir
 
 def time() -> float:
     """
@@ -197,7 +197,6 @@ def print_telemetry():
           f"l_us_d{left_ultrasonic_distance():6.3f} m, "
           f"f_us_d: {front_ultrasonic_distance():6.3f} m, "
           f"gyro: {math.degrees(gyro_angle()):6.3f} deg, "
-          f"mag_obs? {magnetic_obstacle_detected():2}, "
-          f"ir_obs? {ir_obstacle_detected():2}, "
-          f"mag_z: {_previous_magnet_reading[2]:6.3f}, "
+          f"mag: {magnetic_reading():4.2f}, "
+          f"ir: {ir_reading():4.2f}, "
           f"ir_avg: {0.5 * (grovepi.analogRead(IR_LEFT_PORT) + grovepi.analogRead(IR_RIGHT_PORT)):4}")

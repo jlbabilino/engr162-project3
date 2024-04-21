@@ -2,6 +2,7 @@ import math
 
 import constants
 from robot import Robot
+from robot_io import io
 from util import CardinalDirection
 import commands.sequential_command as sc
 import commands.drive_forward_command as dfc
@@ -39,5 +40,6 @@ class DriveInCardinalDirectionCommand:
         self.drive_command.initialize()
 
     def execute(self) -> bool:
+        print(f"Mag: {io.magnetic_reading()}")
         return self.seq_command.execute()
 

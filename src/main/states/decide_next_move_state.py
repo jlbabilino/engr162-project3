@@ -21,7 +21,10 @@ class DecideNextMoveState:
         if decision.is_exit:
             print("Exit found!")
             return cts.CommandThenStateState(
-                lc.LambdaCommand(lambda: io.drop_cargo()),
+                sc.SequentialCommand([
+                    lc.LambdaCommand(lambda: io.drop_cargo()),
+                    lc.LambdaCommand(lambda: self.robot.maze_map.update_end_cell(x, y)),
+                    lc.LambdaCommand(lambda: self.robot.maze_map.print())]),
                 ids.IdleState(self.robot))
         elif decision.direction is None:
             print("Stuck in maze...")

@@ -33,6 +33,9 @@ class SimRobotState:
 
         self.ultrasonic_distances = [math.inf] * len(ULTRASONICS)
 
+        self.ir_reading = 0
+        self.mag_reading = 0
+
         self.time = 0
 
     def update(self, time: float):
@@ -54,6 +57,22 @@ class SimRobotState:
             ultrasonic_distance_environment(self.pose, ultrasonic, envs.SIM_ENVIRONMENT)
             for ultrasonic in ULTRASONICS
         ]
+
+        self.ir_reading = 0
+        envs.SIM_ENVIRONMENT.get_ir_obstacles()
+        for ir_obstacle in envs.SIM_ENVIRONMENT.get_ir_obstacles():
+            dist = math.sqrt((self.pose.x - ir_obstacle.x)**2 + (self.pose.y - ir_obstacle.y)**2)
+            if dist < 0.1:
+                self.ir_reading = 10000
+                break
+
+        self.mag_reading = 0
+        envs.SIM_ENVIRONMENT.get_mag_obstacles()
+        for mag_obstacle in envs.SIM_ENVIRONMENT.get_mag_obstacles():
+            dist = math.sqrt((self.pose.x - mag_obstacle.x)**2 + (self.pose.y - mag_obstacle.y)**2)
+            if dist < 0.1:
+                self.mag_reading = 10000
+                break
 
         self.time = time
     

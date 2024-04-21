@@ -103,18 +103,21 @@ class MazeMap:
         #     if self.maze_map[coords.y][coords.x].cell_type == MazeMapCellType.NOT_VISITED:
         #         safe_directions.append(direction)
 
-        if len(path) >= 2:
-            is_exit = True
-            curr_cell = MazeCoords(x,y)
-            for i in range(1, 3):
-                for wall_dir in CardinalDirection:
-                    if self.get_wall(curr_cell.x, curr_cell.y, wall_dir) == True:
-                        is_exit = False
-                        break
-                curr_cell = curr_cell.move(path[-i].reverse())
+        if x >= 12:
+            return MazeDecision(None, False, True, False)
 
-            if is_exit:
-                return MazeDecision(None, False, True, False)
+        # if len(path) >= 2:
+        #     is_exit = True
+        #     curr_cell = MazeCoords(x,y)
+        #     for i in range(1, 3):
+        #         for wall_dir in CardinalDirection:
+        #             if self.get_wall(curr_cell.x, curr_cell.y, wall_dir) == True:
+        #                 is_exit = False
+        #                 break
+        #         curr_cell = curr_cell.move(path[-i].reverse())
+
+        #     if is_exit:
+        #         return MazeDecision(None, False, True, False)
 
         print("Safe:  ", [d.name for d in safe_directions])
         print("Safe?: ", [d.name for d in potentially_safe_directions])
@@ -194,6 +197,14 @@ class MazeMap:
         Update the cell at (x, y) with the given hazard.
         """
         self.maze_map[y][x].hazard = hazard
+
+        self.expand_map(x, y)
+
+    def update_end_cell(self, x, y):
+        """
+        Update the cell at (x, y) as the exit point.
+        """
+        self.maze_map[y][x].cell_type = MazeMapCellType.EXIT_POINT
 
         self.expand_map(x, y)
 

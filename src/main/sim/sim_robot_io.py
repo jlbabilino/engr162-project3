@@ -49,11 +49,13 @@ def gyro_angle() -> bool:
     global sim_robot_state
     return sim_robot_state.pose.heading * 1
 
-def magnetic_obstacle_detected() -> bool:
-    return False
+def magnetic_reading() -> float:
+    global sim_robot_state
+    return sim_robot_state.mag_reading
 
-def ir_obstacle_detected() -> bool:
-    return False
+def ir_reading() -> float:
+    global sim_robot_state
+    return sim_robot_state.ir_reading
 
 def time() -> float:
     """
