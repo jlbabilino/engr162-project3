@@ -99,8 +99,8 @@ OLD_MAZE_ENVIRONMENT = Environment([
     Wall(2, -5,  3, -5),
     Wall(3, -5,  3, -6),
     Wall(3, -6,  2, -6),
-    Wall(2, -6,  2, -5)
-], [Obstacle(1.5, -0.5)], [Obstacle(4.5, -2.5)]).scale(WALL_LENGTH)
+    Wall(2, -6,  2, -5),
+], [Obstacle(1.5, -0.5)], [Obstacle(4.5, -0.5), Obstacle(4.5, -2.5)]).scale(WALL_LENGTH)
 
 DIFFICULT_ENVIRONEMENT = Environment([
     Wall(0,0,2,0),

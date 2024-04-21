@@ -7,7 +7,7 @@ from states.test_state import TestState
 import states.attempt_drive_next_cell as adnc
 
 def main():
-    run_robot(adnc.AttemptDriveNextCell)
+    run_robot(TestState)
 
 if __name__ == "__main__":
     main()

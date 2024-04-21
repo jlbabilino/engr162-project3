@@ -16,6 +16,7 @@ class CalibrateHeadingWallCommand:
         self.timer = Timer()
 
     def initialize(self):
+        print("Calibrating heading")
         self.timer.start()
 
     def execute(self) -> bool:
@@ -29,6 +30,11 @@ class CalibrateHeadingWallCommand:
             return True
 
         error = d1 - d2
+
+        # print("Error: ", error)
+        if abs(error) >= 0.06:
+            print("Not enough error")
+            error = 0
 
         K = 4
         io.set_drive_left_speed(-K * error)

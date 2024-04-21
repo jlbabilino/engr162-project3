@@ -41,5 +41,6 @@ class DetectSurroundingsCommand:
                         self.robot.coords.x, self.robot.coords.y, global_direction, False)
 
         self.robot.maze_map.pretty_print()
+        print(f"path: {[i.name for i in self.robot.path]}")
         return True
 

@@ -34,7 +34,7 @@ class DecideNextMoveState:
             print("Stuck in maze...")
             return ids.IdleState(self.robot)
         elif decision.status == MazeDecisionStatus.BACKTRACK:
-            print("Backtracking...")
+            print(f"Backtracking: {decision.direction}")
             self.robot.path.pop()
 
             if decision.direction == self.robot.get_direction():
@@ -53,8 +53,6 @@ class DecideNextMoveState:
                     dss.DetectSurroundingsState(self.robot))
         elif decision.status == MazeDecisionStatus.NO_WALL_IN_WAY:
             print(f"Attempting move {decision.direction.name}")
-
-            self.robot.path.append(decision.direction)
 
             if decision.direction == self.robot.get_direction():
                 return adnc.AttemptDriveNextCell(self.robot)

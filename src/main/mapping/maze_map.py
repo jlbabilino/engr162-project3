@@ -83,9 +83,9 @@ class MazeMap:
         """
         maybe_wall_in_way_dirs: List[CardinalDirection] = []
         no_wall_in_way_dirs: List[CardinalDirection] = []
-        for direction in (CardinalDirection.RIGHT,
+        for direction in (CardinalDirection.DOWN,
+                          CardinalDirection.RIGHT,
                           CardinalDirection.UP,
-                          CardinalDirection.DOWN,
                           CardinalDirection.LEFT):
             if len(path) > 0 and direction == path[-1].reverse():
                 continue
@@ -102,7 +102,7 @@ class MazeMap:
             if wall == False:
                 no_wall_in_way_dirs.append(direction)
 
-        if x >= 12:
+        if y <= -3:
             return MazeDecision(None, MazeDecisionStatus.EXIT)
 
         print("Safe:  ", [d.name for d in no_wall_in_way_dirs])

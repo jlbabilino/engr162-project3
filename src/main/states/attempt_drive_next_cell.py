@@ -65,7 +65,8 @@ class AttemptDriveNextCell:
                         lambda: self.robot.maze_map.update_visited_cell(
                             self.target_maze_coords.x,
                             self.target_maze_coords.y)),
-                    lc.LambdaCommand(lambda: self.robot.move_maze_coords(self.target_int_angle.to_cardinal_direction()))
+                    lc.LambdaCommand(lambda: self.robot.move_maze_coords(self.target_int_angle.to_cardinal_direction())),
+                    lc.LambdaCommand(lambda: self.robot.path.append(self.target_int_angle.to_cardinal_direction()))
                 ]),
                 dss.DetectSurroundingsState(self.robot))
 
