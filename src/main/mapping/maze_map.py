@@ -103,10 +103,22 @@ class MazeMap:
         #     if self.maze_map[coords.y][coords.x].cell_type == MazeMapCellType.NOT_VISITED:
         #         safe_directions.append(direction)
 
+        if len(path) >= 2:
+            is_exit = True
+            curr_cell = MazeCoords(x,y)
+            for i in range(1, 3):
+                for wall_dir in CardinalDirection:
+                    if self.get_wall(curr_cell.x, curr_cell.y, wall_dir) == True:
+                        is_exit = False
+                        break
+                curr_cell = curr_cell.move(path[-i].reverse())
+
+            if is_exit:
+                return MazeDecision(None, False, True, False)
+
         print("Safe:  ", [d.name for d in safe_directions])
         print("Safe?: ", [d.name for d in potentially_safe_directions])
         
-
         if len(safe_directions) > 0:
             return MazeDecision(safe_directions[0], True, False, False)
         elif len(potentially_safe_directions) > 0:

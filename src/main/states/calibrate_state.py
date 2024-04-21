@@ -28,7 +28,8 @@ class CalibrateState:
         commands = []
 
         if right_wall_exists:
-            commands.append(chwc.CalibrateHeadingWallCommand(self.robot))
+            pass
+            # commands.append(chwc.CalibrateHeadingWallCommand(self.robot))
 
         if front_wall_exists:
             commands.append(cpwc.CalibratePosWallCommand(self.robot))

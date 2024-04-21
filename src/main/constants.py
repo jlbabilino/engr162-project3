@@ -15,7 +15,8 @@ ROBOT_WIDTH = 0.15
 
 WALL_DISTANCE = 0.4
 
-FRONT_ULTRASONIC = Ultrasonic(0.07, 0.045, 0)
+FRONT_ULTRASONIC = Ultrasonic(0.08, 0.045, 0)
 RIGHT_FRONT_ULTRASONIC = Ultrasonic(0.065, -0.075, math.radians(-90))
 RIGHT_BACK_ULTRASONIC = Ultrasonic(-0.065, -0.075, math.radians(-90))
 LEFT_ULTRASONIC = Ultrasonic(0.025, 0.075, math.radians(90))
+

@@ -23,9 +23,9 @@ class DetectSurroundingsCommand:
                 0.5 * (io.right_front_ultrasonic_distance()
                      + io.right_back_ultrasonic_distance())
                      - constants.RIGHT_FRONT_ULTRASONIC.y_offset)
-        distances[CardinalDirection.UP] = (
-                io.left_ultrasonic_distance()
-                + constants.LEFT_ULTRASONIC.y_offset)
+        # distances[CardinalDirection.UP] = (
+        #         io.left_ultrasonic_distance()
+        #         + constants.LEFT_ULTRASONIC.y_offset)
 
         for direction, distance in distances.items():
             global_direction = self.robot.get_direction().plus(direction)

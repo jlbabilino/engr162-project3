@@ -30,11 +30,11 @@ class CalibrateHeadingWallCommand:
 
         error = d1 - d2
 
-        K = 6
+        K = 4
         io.set_drive_left_speed(-K * error)
         io.set_drive_right_speed(K * error)
 
-        if self.timer.has_elapsed(1):
+        if self.timer.has_elapsed(1.5):
             io.set_drive_left_speed(0)
             io.set_drive_right_speed(0)
             self.robot.set_heading(self.robot.get_heading_int_angle().to_angle())

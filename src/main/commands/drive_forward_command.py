@@ -22,7 +22,7 @@ class DriveForwardCommand:
         self.target_heading = target_heading
         self.distance = distance
         
-        self.velocity = math.copysign(0.06, self.distance)
+        self.velocity = math.copysign(0.12, self.distance)
         
         self.drive_time = self.distance / self.velocity
 

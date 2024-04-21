@@ -1,4 +1,5 @@
 from robot import Robot
+from robot_io import io
 
 import states.idle_state as ids
 
@@ -7,6 +8,7 @@ import states.detect_surroundings_state as dss
 import commands.sequential_command as sc
 import commands.drive_in_cardinal_direction_command as dicdc
 import commands.turn_to_cardinal_direction_command as ttc
+import commands.lambda_command as lc
 
 class DecideNextMoveState:
     def __init__(self, robot: Robot):
@@ -18,7 +20,9 @@ class DecideNextMoveState:
         decision = self.robot.maze_map.optimal_next_move(x, y, self.robot.path)
         if decision.is_exit:
             print("Exit found!")
-            return ids.IdleState(self.robot)
+            return cts.CommandThenStateState(
+                lc.LambdaCommand(lambda: io.drop_cargo()),
+                ids.IdleState(self.robot))
         elif decision.direction is None:
             print("Stuck in maze...")
             return ids.IdleState(self.robot)

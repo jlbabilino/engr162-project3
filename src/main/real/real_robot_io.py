@@ -59,6 +59,8 @@ def initialize():
             CARGO_PORT, BP.get_motor_encoder(CARGO_PORT))
     
     stow_cargo()
+    print("Load cargo now!")
+    _time.sleep(4)
 
     global _initial_time # Python requires this to modify global variable
     # Initialize timestamp so that time() returns 0 at the start of the program
@@ -190,10 +192,10 @@ def print_telemetry():
     Columns are fixed width. Three points of decimal precision are used.
     """
     print(f"ts: {time():6.3f}, "
-          f"lf_us_d: {right_front_ultrasonic_distance():6.3f} m, "
-          f"lb_us_d: {right_back_ultrasonic_distance():6.3f} m, "
-          f"f_us_d{left_ultrasonic_distance():6.3f} m, "
-          f"r_us_d: {front_ultrasonic_distance():6.3f} m, "
+          f"rf_us_d: {right_front_ultrasonic_distance():6.3f} m, "
+          f"rb_us_d: {right_back_ultrasonic_distance():6.3f} m, "
+          f"l_us_d{left_ultrasonic_distance():6.3f} m, "
+          f"f_us_d: {front_ultrasonic_distance():6.3f} m, "
           f"gyro: {math.degrees(gyro_angle()):6.3f} deg, "
           f"mag_obs? {magnetic_obstacle_detected():2}, "
           f"ir_obs? {ir_obstacle_detected():2}, "
