@@ -4,6 +4,15 @@ from enum import Enum
 from dataclasses import dataclass
 
 @dataclass
+class Ultrasonic:
+    """
+    Represents an ultrasonic sensor on the robot
+    """
+    x_offset: float
+    y_offset: float
+    heading_offset: float
+
+@dataclass
 class DriveWheelPositions:
     """
     Represents the positions of the left and right drive wheels, as in the

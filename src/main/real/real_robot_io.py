@@ -16,19 +16,20 @@ BP = brickpi3.BrickPi3()
 mpu9250 = MPU9250()
 
 # LEGO Sensor Ports
-GYRO_PORT = BP.PORT_1
-FRONT_ULTRASONIC_PORT = BP.PORT_4
+GYRO_PORT = BP.PORT_4
+LEFT_ULTRASONIC_PORT = BP.PORT_3
 
 # GrovePi Sensor Ports
-LEFT_FRONT_ULTRASONIC_PORT = 3
-LEFT_BACK_ULTRASONIC_PORT = 2
-RIGHT_ULTRASONIC_PORT = 4
+RIGHT_FRONT_ULTRASONIC_PORT = 3
+RIGHT_BACK_ULTRASONIC_PORT = 2
+FRONT_ULTRASONIC_PORT = 4
 IR_LEFT_PORT = 15 # These are for port A0
 IR_RIGHT_PORT = 14
 
 # LEGO Motor Ports
 DRIVE_LEFT_PORT = BP.PORT_B
 DRIVE_RIGHT_PORT = BP.PORT_C
+CARGO_PORT = BP.PORT_A
 
 # Keep track of timestamp robot starts at
 _initial_time = 0.0
@@ -46,7 +47,7 @@ def initialize():
     gyro_angle()
     print("Gyro Calibrated!")
     print("Calibrating Front Ultrasonic...")
-    front_ultrasonic_distance()
+    left_ultrasonic_distance()
     print("Front Ultrasonic Calibrated!")
 
     # Reset motor encoders
@@ -54,6 +55,10 @@ def initialize():
             DRIVE_LEFT_PORT, BP.get_motor_encoder(DRIVE_LEFT_PORT))
     BP.offset_motor_encoder(
             DRIVE_RIGHT_PORT, BP.get_motor_encoder(DRIVE_RIGHT_PORT))
+    BP.offset_motor_encoder(
+            CARGO_PORT, BP.get_motor_encoder(CARGO_PORT))
+    
+    stow_cargo()
 
     global _initial_time # Python requires this to modify global variable
     # Initialize timestamp so that time() returns 0 at the start of the program
@@ -69,35 +74,34 @@ def shutdown():
     # Kill all motors and sensors
     BP.reset_all()
 
-def left_front_ultrasonic_distance() -> float:
+def right_front_ultrasonic_distance() -> float:
     """
     Returns the distance in meters from the left front ultrasonic sensor
     """
-    return grovepi.ultrasonicRead(LEFT_FRONT_ULTRASONIC_PORT) / 100 # cm -> m
+    return grovepi.ultrasonicRead(RIGHT_FRONT_ULTRASONIC_PORT) / 100 # cm -> m
 
-def left_back_ultrasonic_distance() -> float:
+def right_back_ultrasonic_distance() -> float:
     """
-    Returns the distance in meters from the left back ultrasonic sensor
+    Returns the distance in meters from the right back ultrasonic sensor
     """
-    return grovepi.ultrasonicRead(LEFT_BACK_ULTRASONIC_PORT) / 100 # cm -> m
+    return grovepi.ultrasonicRead(RIGHT_BACK_ULTRASONIC_PORT) / 100 # cm -> m
 
-def front_ultrasonic_distance() -> float:
+def left_ultrasonic_distance() -> float:
     """
-    Returns the distance in meters from the front ultrasonic sensor
+    Returns the distance in meters from the left ultrasonic sensor
     """
     # Keep iterating until no error happens
     while True:
         try:
-            return BP.get_sensor(FRONT_ULTRASONIC_PORT) / 100 # cm -> m
+            return BP.get_sensor(LEFT_ULTRASONIC_PORT) / 100 # cm -> m
         except brickpi3.SensorError as error:
             pass
 
-def right_ultrasonic_distance() -> float:
+def front_ultrasonic_distance() -> float:
     """
     Returns the distance in meters from the left back ultrasonic sensor
     """
-    return grovepi.ultrasonicRead(RIGHT_ULTRASONIC_PORT) / 100 # cm -> m
-
+    return grovepi.ultrasonicRead(FRONT_ULTRASONIC_PORT) / 100 # cm -> m
 
 def gyro_angle() -> bool:
     """
@@ -171,8 +175,14 @@ def set_drive_right_speed(wheel_tangential_velocity: float):
     wheel_angular_speed = wheel_tangential_velocity / (
             constants.WHEEL_DIAMETER / 2)
     BP.set_motor_dps(DRIVE_RIGHT_PORT,
-                     math.degrees(wheel_angular_speed)
+                     -math.degrees(wheel_angular_speed)
                      * constants.WHEEL_GEAR_RATIO)
+    
+def stow_cargo():
+    BP.set_motor_position(CARGO_PORT, -20)
+
+def drop_cargo():
+    BP.set_motor_position(CARGO_PORT, -130)
 
 def print_telemetry():
     """
@@ -180,10 +190,10 @@ def print_telemetry():
     Columns are fixed width. Three points of decimal precision are used.
     """
     print(f"ts: {time():6.3f}, "
-          f"lf_us_d: {left_front_ultrasonic_distance():6.3f} m, "
-          f"lb_us_d: {left_back_ultrasonic_distance():6.3f} m, "
-          f"f_us_d{front_ultrasonic_distance():6.3f} m, "
-          f"r_us_d: {right_ultrasonic_distance():6.3f} m, "
+          f"lf_us_d: {right_front_ultrasonic_distance():6.3f} m, "
+          f"lb_us_d: {right_back_ultrasonic_distance():6.3f} m, "
+          f"f_us_d{left_ultrasonic_distance():6.3f} m, "
+          f"r_us_d: {front_ultrasonic_distance():6.3f} m, "
           f"gyro: {math.degrees(gyro_angle()):6.3f} deg, "
           f"mag_obs? {magnetic_obstacle_detected():2}, "
           f"ir_obs? {ir_obstacle_detected():2}, "

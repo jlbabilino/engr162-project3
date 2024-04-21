@@ -19,15 +19,15 @@ class CalibrateState:
         x = self.robot.coords.x
         y = self.robot.coords.y
         dir = self.robot.get_direction()
-        left_wall_exists = self.robot.maze_map.get_wall_relative(
-            x, y, dir, CardinalDirection.UP) # Direction of wall we care about
+        right_wall_exists = self.robot.maze_map.get_wall_relative(
+            x, y, dir, CardinalDirection.DOWN) # Direction of wall we care about
                                              # when robot is facing right
         front_wall_exists = self.robot.maze_map.get_wall_relative(
             x, y, dir, CardinalDirection.RIGHT)
 
         commands = []
 
-        if left_wall_exists:
+        if right_wall_exists:
             commands.append(chwc.CalibrateHeadingWallCommand(self.robot))
 
         if front_wall_exists:

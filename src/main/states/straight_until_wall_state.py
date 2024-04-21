@@ -26,9 +26,9 @@ class StraightUntilWallState:
         self.drive_command.execute()
 
         io.print_telemetry()
-        if io.front_ultrasonic_distance() <= 0.09:
+        if io.left_ultrasonic_distance() <= 0.09:
             print("StraightUntilWallState: Wall detected in front")
-            if (io.left_front_ultrasonic_distance() <= 0.3): # must be a right turn
+            if (io.right_front_ultrasonic_distance() <= 0.3): # must be a right turn
                 print("StraightUntilWallState: Decided to make a right turn")
                 self.target_heading += math.radians(-90)
             else:

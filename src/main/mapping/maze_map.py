@@ -68,9 +68,9 @@ class MazeMap:
 
         self.maze_map[0][0].cell_type = MazeMapCellType.STARTING_POINT
 
-        self.maze_map[0][0].left_wall = True
-        self.maze_map[0][0].bottom_wall = True
-        self.maze_map[1][0].bottom_wall = True
+        # self.maze_map[0][0].left_wall = True
+        # self.maze_map[0][0].bottom_wall = True
+        # self.maze_map[1][0].bottom_wall = True
 
         self.maze_path = []
 

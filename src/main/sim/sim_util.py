@@ -7,31 +7,14 @@ from enum import Enum
 import math
 
 import constants
-from util import DriveWheelPositions, Pose2d, Transform2d, Translation2d
+from util import DriveWheelPositions, Pose2d, Ultrasonic
 import sim.sim_environments as envs
 from kinematics import forward_kinematics
 
-@dataclass
-class Ultrasonic:
-    """
-    Represents an ultrasonic sensor on the robot
-    """
-    x_offset: float
-    y_offset: float
-    heading_offset: float
-
-FRONT_ULTRASONIC = Ultrasonic(constants.FRONT_ULTRASONIC_OFFSET, 0, 0)
-LEFT_FRONT_ULTRASONIC = Ultrasonic(constants.LEFT_FRONT_ULTRASONIC_OFFSET,
-                                   constants.SIDE_ULTRASONIC_OFFSET,
-                                   math.radians(90))
-LEFT_BACK_ULTRASONIC = Ultrasonic(constants.LEFT_BACK_ULTRASONIC_OFFSET,
-                                  constants.SIDE_ULTRASONIC_OFFSET,
-                                  math.radians(90))
-RIGHT_ULTRASONIC = Ultrasonic(0, -constants.RIGHT_ULTRASONIC_OFFSET,
-                              math.radians(-90))
-
-ULTRASONICS = [FRONT_ULTRASONIC, LEFT_FRONT_ULTRASONIC, LEFT_BACK_ULTRASONIC,
-                RIGHT_ULTRASONIC]
+ULTRASONICS = [constants.FRONT_ULTRASONIC,
+               constants.RIGHT_FRONT_ULTRASONIC,
+               constants.RIGHT_BACK_ULTRASONIC,
+               constants.LEFT_ULTRASONIC]
 
 class SimRobotState:
     """
@@ -48,9 +31,7 @@ class SimRobotState:
         self.left_wheel_position = 0
         self.right_wheel_position = 0
 
-        self.front_ultrasonic_distance = +math.inf
-        self.left_front_ultrasonic_distance = +math.inf
-        self.left_back_ultrasonic_distance = +math.inf
+        self.ultrasonic_distances = [math.inf] * len(ULTRASONICS)
 
         self.time = 0
 
@@ -68,7 +49,7 @@ class SimRobotState:
 
         self.pose = forward_kinematics(self.pose, prev_wheel_positions,
                                        curr_wheel_positions)
-        
+
         self.ultrasonic_distances = [
             ultrasonic_distance_environment(self.pose, ultrasonic, envs.SIM_ENVIRONMENT)
             for ultrasonic in ULTRASONICS

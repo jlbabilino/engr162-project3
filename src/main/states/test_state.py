@@ -1,10 +1,14 @@
+from robot_io import io
 from robot import Robot
 
 from util import CardinalDirection
 
 import commands.drive_forward_command as dfc
 import commands.turn_to_cardinal_direction_command as ttc
+import commands.calibrate_heading_wall_command as chwc
 import commands.sequential_command as sc
+import commands.wait_command as wc
+import commands.lambda_command as lc
 
 import states.idle_state as ids
 
@@ -13,8 +17,8 @@ class TestState:
         self.robot = robot
 
         self.command = sc.SequentialCommand([
-            ttc.TurnToCardinalDirectionCommand(self.robot, CardinalDirection.UP),
-            dfc.DriveForwardCommand(self.robot, 3.141592/2, +0.40),
+            wc.WaitCommand(4),
+            chwc.CalibrateHeadingWallCommand(self.robot)
         ])
         self.command.initialize()
 

@@ -23,7 +23,7 @@ class CalibratePosWallCommand:
     def execute(self) -> bool:
         d = io.front_ultrasonic_distance()
 
-        TARGET = constants.WALL_DISTANCE / 2 - constants.FRONT_ULTRASONIC_OFFSET
+        TARGET = constants.WALL_DISTANCE / 2 - constants.FRONT_ULTRASONIC.x_offset
 
         if d == math.inf:
             io.set_drive_left_speed(0)

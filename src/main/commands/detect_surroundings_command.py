@@ -18,14 +18,14 @@ class DetectSurroundingsCommand:
         distances = {}
         distances[CardinalDirection.RIGHT] = (
                 io.front_ultrasonic_distance()
-                + constants.FRONT_ULTRASONIC_OFFSET)
+                + constants.FRONT_ULTRASONIC.x_offset)
         distances[CardinalDirection.DOWN] = (
-                io.right_ultrasonic_distance()
-                + constants.RIGHT_ULTRASONIC_OFFSET)
+                0.5 * (io.right_front_ultrasonic_distance()
+                     + io.right_back_ultrasonic_distance())
+                     - constants.RIGHT_FRONT_ULTRASONIC.y_offset)
         distances[CardinalDirection.UP] = (
-                0.5 * (io.left_front_ultrasonic_distance()
-                     + io.left_back_ultrasonic_distance())
-                     + constants.SIDE_ULTRASONIC_OFFSET)
+                io.left_ultrasonic_distance()
+                + constants.LEFT_ULTRASONIC.y_offset)
 
         for direction, distance in distances.items():
             global_direction = self.robot.get_direction().plus(direction)
