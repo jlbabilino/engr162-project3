@@ -21,9 +21,9 @@ class DriveForwardCommand:
         self.robot = robot
         self.target_heading = target_heading
         self.distance = distance
-        
+
         self.velocity = math.copysign(0.12, self.distance)
-        
+
         self.drive_time = self.distance / self.velocity
 
         self.timer = Timer()

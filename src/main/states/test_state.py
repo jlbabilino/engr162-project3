@@ -17,9 +17,13 @@ class TestState:
     def __init__(self, robot: Robot):
         self.robot = robot
 
+        # self.command = sc.SequentialCommand([
+        #     wc.WaitCommand(2),
+        #     cpwc.CalibratePosWallCommand(self.robot)
+        # ])
         self.command = sc.SequentialCommand([
             wc.WaitCommand(2),
-            cpwc.CalibratePosWallCommand(self.robot)
+            lc.LambdaCommand(lambda: io.drop_cargo()),
         ])
         self.command.initialize()
 
