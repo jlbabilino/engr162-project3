@@ -47,7 +47,7 @@ def right_ultrasonic_distance() -> float:
 
 def gyro_angle() -> bool:
     global sim_robot_state
-    return sim_robot_state.pose.heading * 0.98
+    return sim_robot_state.pose.heading * 1
 
 def magnetic_obstacle_detected() -> bool:
     return False
