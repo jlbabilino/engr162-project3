@@ -20,6 +20,7 @@ class TurnToCardinalDirectionCommand:
             self.robot.get_direction(), self.target_direction)
 
         self.target_heading_int_angle = self.robot.get_heading_int_angle().plus(relative_int_angle)
+        print("turn target angle: ", self.target_heading_int_angle)
 
         self.point_turn_command = ptc.PointTurnCommand(self.robot, self.target_heading_int_angle.to_angle())
         self.set_dir_command = lc.LambdaCommand(

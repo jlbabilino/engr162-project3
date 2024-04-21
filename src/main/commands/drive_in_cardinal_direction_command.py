@@ -40,6 +40,5 @@ class DriveInCardinalDirectionCommand:
         self.drive_command.initialize()
 
     def execute(self) -> bool:
-        print(f"Mag: {io.magnetic_reading()}")
         return self.seq_command.execute()
 

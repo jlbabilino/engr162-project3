@@ -42,3 +42,6 @@ class DriveForwardCommand:
             io.set_drive_right_speed(0)
             return True
         return False
+
+    def distance_traveled(self) -> float:
+        return self.velocity * self.timer.elapsed_time()

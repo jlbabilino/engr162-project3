@@ -20,5 +20,5 @@ RIGHT_FRONT_ULTRASONIC = Ultrasonic(0.065, -0.075, math.radians(-90))
 RIGHT_BACK_ULTRASONIC = Ultrasonic(-0.065, -0.075, math.radians(-90))
 LEFT_ULTRASONIC = Ultrasonic(0.025, 0.075, math.radians(90))
 
+IR_THRESHOLD = 100
 MAG_THRESHOLD = 1000
-
