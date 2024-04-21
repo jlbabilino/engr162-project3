@@ -8,6 +8,8 @@ class DetectedHazard:
     """
     Represents a detected hazard in the maze.
     """
+    x: int
+    y: int
     hazard_type: str
     parameter_of_interest: str
     parameter_value: float
@@ -26,8 +28,6 @@ class MazeMapCell:
     bottom_wall: Optional[bool] = None
 
     cell_type: MazeMapCellType = MazeMapCellType.NOT_VISITED
-
-    hazard: Optional[DetectedHazard] = None
 
 @dataclass
 class MazeDecision:
@@ -73,6 +73,9 @@ class MazeMap:
         # self.maze_map[1][0].bottom_wall = True
 
         self.maze_path = []
+
+        self.ir_hazards: List[DetectedHazard] = []
+        self.mag_hazards: List[DetectedHazard] = []
 
     def optimal_next_move(self, x: int, y: int, path: List[CardinalDirection]) -> MazeDecision:
         """
@@ -192,13 +195,25 @@ class MazeMap:
 
         self.expand_map(x, y)
 
-    def update_hazard_cell(self, x, y, hazard: DetectedHazard):
+    def update_ir_hazard(self, x: int, y: int, strength: float):
         """
         Update the cell at (x, y) with the given hazard.
         """
-        self.maze_map[y][x].hazard = hazard
+        self.maze_map[y][x].cell_type = MazeMapCellType.HEAT_SOURCE
 
         self.expand_map(x, y)
+
+        self.ir_hazards.append(DetectedHazard(x, y, "High Temperature Heat Source", "Radiated Power (W)", strength))
+
+    def update_mag_hazard(self, x: int, y: int, strength: float):
+        """
+        Update the cell at (x, y) with the given hazard.
+        """
+        self.maze_map[y][x].cell_type = MazeMapCellType.MAGNETIC_SOURCE
+
+        self.expand_map(x, y)
+
+        self.mag_hazards.append(DetectedHazard(x, y, "Electrical/Magnetic Activity Source", "Field Strength (uT)", strength))
 
     def update_end_cell(self, x, y):
         """
@@ -218,6 +233,10 @@ class MazeMap:
         for y in range(self.y_max, self.y_min - 1, -1):
             print(",".join([str(self.maze_map[y][x].cell_type.value)
                             for x in range(self.x_min, self.x_max + 1, +1)]))
+        print()
+        print("Hazard Type, Parameter of Interest, Parameter Value, Hazard X Coordinate, Hazard Y Coordinate")
+        for hazard in self.ir_hazards:
+            print(f"{hazard.hazard_type}, {hazard.parameter_of_interest}, {hazard.parameter_value}, {hazard.x}, {hazard.y}")
             
     def pretty_print(self):
         """
@@ -271,5 +290,7 @@ class MazeMap:
 # testMaze.update_visited_cell(0, 2, True, True, True, True)
 # testMaze.update_visited_cell(-3, 0, True, True, True, True)
 # testMaze.update_visited_cell(0, -4, True, True, True, True)
+
+# testMaze.update_ir_hazard(1, 1, 100)
 
 # testMaze.pretty_print()
