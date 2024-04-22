@@ -83,8 +83,8 @@ class MazeMap:
         """
         maybe_wall_in_way_dirs: List[CardinalDirection] = []
         no_wall_in_way_dirs: List[CardinalDirection] = []
-        for direction in (CardinalDirection.DOWN,
-                          CardinalDirection.RIGHT,
+        for direction in (CardinalDirection.RIGHT,
+                          CardinalDirection.DOWN,
                           CardinalDirection.UP,
                           CardinalDirection.LEFT):
             if len(path) > 0 and direction == path[-1].reverse():

@@ -8,7 +8,7 @@ from util import Ultrasonic
 WHEEL_DIAMETER = 0.04 * (124 / 120)
 WHEEL_GEAR_RATIO = 1 / 1
 
-TRACK_WIDTH = 0.147 / 1.5
+TRACK_WIDTH = 0.12
 
 ROBOT_LENGTH = 0.18
 ROBOT_WIDTH = 0.15

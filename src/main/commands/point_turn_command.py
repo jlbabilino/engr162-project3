@@ -36,17 +36,17 @@ class PointTurnCommand:
     def execute(self) -> bool:
         # Moving setpoint
         if (self.timer.elapsed_time() <= self.turn_duration):
+            P = 0
             FF = self.omega
             self.set_point = self.start_heading + self.timer.elapsed_time() * self.omega
         else:
+            P = 4
             FF = 0
             self.set_point = self.target_heading
 
         error = self.robot.get_heading() - self.set_point
 
-        P = 6 * error
-
-        control_input = FF - P
+        control_input = FF - P * error
 
         left_speed, right_speed = inverse_kinematics(0, control_input)
 
