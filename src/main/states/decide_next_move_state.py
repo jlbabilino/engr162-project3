@@ -12,6 +12,7 @@ import commands.sequential_command as sc
 import commands.drive_in_cardinal_direction_command as dicdc
 import commands.turn_to_cardinal_direction_command as ttc
 import commands.lambda_command as lc
+import commands.wait_command as wc
 
 class DecideNextMoveState:
     def __init__(self, robot: Robot):
@@ -24,11 +25,23 @@ class DecideNextMoveState:
         decision = self.robot.maze_map.optimal_next_move(x, y, self.robot.path)
         if decision.status == MazeDecisionStatus.EXIT:
             print("Exit found!")
+            def end_func():
+                io.drop_cargo()
+                self.robot.maze_map.update_end_cell(x, y)
+                self.robot.maze_map.print()
+            def dance():
+                io.set_drive_left_speed(-0.1)
+                io.set_drive_right_speed(0.1)
+            def end_dance():
+                io.set_drive_left_speed(0)
+                io.set_drive_right_speed(0)
             return cts.CommandThenStateState(
                 sc.SequentialCommand([
-                    lc.LambdaCommand(lambda: io.drop_cargo()),
-                    lc.LambdaCommand(lambda: self.robot.maze_map.update_end_cell(x, y)),
-                    lc.LambdaCommand(lambda: self.robot.maze_map.print())]),
+                    lc.LambdaCommand(end_func),
+                    wc.WaitCommand(1),
+                    lc.LambdaCommand(dance),
+                    wc.WaitCommand(4),
+                    lc.LambdaCommand(end_dance)]),
                 ids.IdleState(self.robot))
         elif decision.status == MazeDecisionStatus.STUCK:
             print("Stuck in maze...")
