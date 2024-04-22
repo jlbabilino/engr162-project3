@@ -23,12 +23,13 @@ class TestState:
         #     wc.WaitCommand(2),
         #     dfc.DriveForwardCommand(self.robot, 0, 0.4)
         # ])
-        # self.command = sc.SequentialCommand([
-        #     wc.WaitCommand(2),
-        #     lc.LambdaCommand(lambda: io.drop_cargo()),
-        # ])
+        self.command = sc.SequentialCommand([
+            wc.WaitCommand(0.1),
+            lc.LambdaCommand(lambda: io.drop_cargo()),
+        ])
         # self.command = ptc.PointTurnCommand(self.robot, math.radians(90))
-        self.command = dfc.DriveForwardCommand(self.robot, 0, 0.4)
+        # self.command = dfc.DriveForwardCommand(self.robot, 0, 0.4)
+        # self.command = cpwc.CalibratePosWallCommand(self.robot)
         self.command.initialize()
 
     def execute(self):

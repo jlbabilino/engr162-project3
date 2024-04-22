@@ -33,7 +33,7 @@ class DetectSurroundingsCommand:
             #             self.robot.coords.x,
             #             self.robot.coords.y,
             #             global_direction) == None:
-            if distance < constants.WALL_DISTANCE:
+            if distance <= constants.WALL_DETECTION_THRESHOLD:
                 self.robot.maze_map.set_wall(
                         self.robot.coords.x, self.robot.coords.y, global_direction, True)
             else:

@@ -102,7 +102,7 @@ class MazeMap:
             if wall == False:
                 no_wall_in_way_dirs.append(direction)
 
-        if y <= -3:
+        if x >= 5:
             return MazeDecision(None, MazeDecisionStatus.EXIT)
 
         print("Safe:  ", [d.name for d in no_wall_in_way_dirs])

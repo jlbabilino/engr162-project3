@@ -28,7 +28,7 @@ class PointTurnCommand:
         self.start_heading = self.robot.get_heading()
 
         self.relative_angle = self.target_heading - self.start_heading
-        self.omega = math.copysign(math.radians(100), self.relative_angle)
+        self.omega = math.copysign(math.radians(120), self.relative_angle)
         self.turn_duration = self.relative_angle / self.omega
 
         self.left_speed, self.right_speed = inverse_kinematics(0, self.omega)
@@ -53,7 +53,7 @@ class PointTurnCommand:
         io.set_drive_left_speed(left_speed)
         io.set_drive_right_speed(right_speed)
 
-        if self.timer.has_elapsed(self.turn_duration + 1):
+        if self.timer.has_elapsed(self.turn_duration + 0.7):
             io.set_drive_left_speed(0)
             io.set_drive_right_speed(0)
             return True

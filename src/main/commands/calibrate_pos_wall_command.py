@@ -36,7 +36,7 @@ class CalibratePosWallCommand:
         io.set_drive_left_speed(-K * error)
         io.set_drive_right_speed(-K * error)
 
-        if self.timer.has_elapsed(1.5):
+        if self.timer.has_elapsed(1):
             io.set_drive_left_speed(0)
             io.set_drive_right_speed(0)
             return True
