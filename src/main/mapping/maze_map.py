@@ -81,6 +81,10 @@ class MazeMap:
         move to, meaning it is known that there is no wall or obstacle in the
         way.
         """
+
+        # if x == 2 and y == -4:
+        #     return MazeDecision(CardinalDirection.RIGHT, MazeDecisionStatus.NO_WALL_IN_WAY)
+
         maybe_wall_in_way_dirs: List[CardinalDirection] = []
         no_wall_in_way_dirs: List[CardinalDirection] = []
         for direction in (CardinalDirection.RIGHT,
@@ -102,7 +106,7 @@ class MazeMap:
             if wall == False:
                 no_wall_in_way_dirs.append(direction)
 
-        if y <= -4:
+        if x >= 11:
             return MazeDecision(None, MazeDecisionStatus.EXIT)
 
         print("Safe:  ", [d.name for d in no_wall_in_way_dirs])

@@ -1,4 +1,5 @@
 import constants
+import time
 
 from robot import Robot
 from robot_io import io
@@ -11,7 +12,8 @@ class IdleState:
         self.robot = robot
 
     def execute(self):
-        # io.print_telemetry()
+        io.print_telemetry()
+        time.sleep(0.1)
         # io.magnetic_obstacle_detected()
 
         # print(f"Magnet: {io.magnetic_reading():6.3f} IR: {io.ir_reading():6.3f}")
