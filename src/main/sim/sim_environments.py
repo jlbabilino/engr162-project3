@@ -20,19 +20,41 @@ class Wall:
                     self.y1 * factor,
                     self.x2 * factor,
                     self.y2 * factor)
+    
+@dataclass
+class Obstacle:
+    """
+    Represents an obstacle in the 2D maze environment
+    """
+    def __init__(self, x: float, y: float):
+        self.x = x
+        self.y = y
+
+    def scale(self, factor: float) -> Obstacle:
+        return Obstacle(self.x * factor, self.y * factor)
 
 class Environment:
     """
     Represents the environment the robot is in, with walls and obstacles
     """
-    def __init__(self, walls: list):
+    def __init__(self, walls: list[Wall], ir_obstacles: list[Obstacle], mag_obstacles: list[Obstacle]):
         self.walls = walls
+        self.ir_obstacles = ir_obstacles
+        self.mag_obstacles = mag_obstacles
 
     def get_walls(self) -> list[Wall]:
         return self.walls
+    
+    def get_ir_obstacles(self) -> list[Obstacle]:
+        return self.ir_obstacles
+    
+    def get_mag_obstacles(self) -> list[Obstacle]:
+        return self.mag_obstacles
 
     def scale(self, factor: float) -> Environment:
-        return Environment([wall.scale(factor) for wall in self.walls])
+        return Environment([wall.scale(factor) for wall in self.walls],
+                           [obstacle.scale(factor) for obstacle in self.ir_obstacles],
+                           [obstacle.scale(factor) for obstacle in self.mag_obstacles])
 
 OLD_MAZE_ENVIRONMENT = Environment([
     Wall(0,  0,  2,  0),
@@ -77,8 +99,8 @@ OLD_MAZE_ENVIRONMENT = Environment([
     Wall(2, -5,  3, -5),
     Wall(3, -5,  3, -6),
     Wall(3, -6,  2, -6),
-    Wall(2, -6,  2, -5)
-]).scale(WALL_LENGTH)
+    Wall(2, -6,  2, -5),
+], [Obstacle(1.5, -0.5)], [Obstacle(4.5, -0.5), Obstacle(4.5, -2.5)]).scale(WALL_LENGTH)
 
 DIFFICULT_ENVIRONEMENT = Environment([
     Wall(0,0,2,0),
@@ -107,7 +129,7 @@ DIFFICULT_ENVIRONEMENT = Environment([
     Wall(5,-5,6,-5),
     Wall(6,-4,6,-5),
     Wall(6,-4,7,-4)
-    ]).scale(WALL_LENGTH)
+    ], [], []).scale(WALL_LENGTH)
 
 OFFICE_HOURS_MAZE1 = Environment([
     Wall(0,0,1,0),
@@ -122,7 +144,7 @@ OFFICE_HOURS_MAZE1 = Environment([
     Wall(0,-3,1,-3),
     Wall(1,-1,1,-3),
     Wall(0,-1,1,-1)
-]).scale(WALL_LENGTH)
+], [], []).scale(WALL_LENGTH)
 
 DIFFICULT_ENVIRONEMENT_2 = Environment([
     Wall(0,0,0,2),
@@ -167,10 +189,12 @@ DIFFICULT_ENVIRONEMENT_2 = Environment([
     Wall(8,-6,8,-7),
     Wall(8,-7,9,-7),
     Wall(0,-1,0,-9)
-]).scale(WALL_LENGTH)
+],[
+    Obstacle(1.5, -0.5)
+], []).scale(WALL_LENGTH)
 
 
 """
 Environment to be used in the simulation.
 """
-SIM_ENVIRONMENT = DIFFICULT_ENVIRONEMENT_2
+SIM_ENVIRONMENT = OLD_MAZE_ENVIRONMENT

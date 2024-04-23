@@ -1,6 +1,7 @@
 import constants
-from util import IntAngle, MazeCoords
+from util import IntAngle, MazeCoords, CardinalDirection
 from robot_io import io
+from typing import List
 from mapping.maze_map import MazeMap
 
 class Robot:
@@ -13,7 +14,7 @@ class Robot:
         self.heading_offset = 0.0
         self.heading_int_angle = IntAngle(0)
         self.coords = MazeCoords(0, 0)
-        self.path = []
+        self.path: List[CardinalDirection] = []
         self.maze_map = MazeMap()
 
     def initialize(self):
@@ -40,6 +41,9 @@ class Robot:
     
     def get_maze_coords(self) -> MazeCoords:
         return self.coords
+    
+    def move_maze_coords(self, direction: CardinalDirection) -> None:
+        self.coords = self.coords.move(direction)
 
     def periodic(self):
         pass

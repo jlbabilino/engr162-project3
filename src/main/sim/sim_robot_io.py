@@ -31,29 +31,31 @@ def shutdown():
 
 def front_ultrasonic_distance() -> float:
     global sim_robot_state
-    return sim_robot_state.ultrasonic_distances[0]
+    return round(sim_robot_state.ultrasonic_distances[0], 2)
 
-def left_front_ultrasonic_distance() -> float:
+def right_front_ultrasonic_distance() -> float:
     global sim_robot_state
     return round(sim_robot_state.ultrasonic_distances[1], 2)
 
-def left_back_ultrasonic_distance() -> float:
+def right_back_ultrasonic_distance() -> float:
     global sim_robot_state
     return round(sim_robot_state.ultrasonic_distances[2], 2)
 
-def right_ultrasonic_distance() -> float:
+def left_ultrasonic_distance() -> float:
     global sim_robot_state
-    return round(sim_robot_state.ultrasonic_distances[3], 2)
+    return sim_robot_state.ultrasonic_distances[3]
 
 def gyro_angle() -> bool:
     global sim_robot_state
-    return sim_robot_state.pose.heading * 0.98
+    return sim_robot_state.pose.heading * 1
 
-def magnetic_obstacle_detected() -> bool:
-    return False
+def magnetic_reading() -> float:
+    global sim_robot_state
+    return sim_robot_state.mag_reading
 
-def ir_obstacle_detected() -> bool:
-    return False
+def ir_reading() -> float:
+    global sim_robot_state
+    return sim_robot_state.ir_reading
 
 def time() -> float:
     """
@@ -71,6 +73,12 @@ def set_drive_right_speed(wheel_tangential_velocity: float):
     global sim_robot_state
 
     sim_robot_state.right_wheel_velocity = wheel_tangential_velocity
+
+def stow_cargo():
+    pass
+
+def drop_cargo():
+    pass
 
 def print_telemetry():
     ...

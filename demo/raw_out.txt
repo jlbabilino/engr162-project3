@@ -1,0 +1,515 @@
+team_40@engr:~/Documents/main $ python3 run_demo.py
+Calibrating Gyro...
+Gyro Calibrated!
+Calibrating Front Ultrasonic...
+Front Ultrasonic Calibrated!
+Load cargo now!
+Robot: initialized
+Origin: (0,0)
+             
+   ⚬   S   ⚬
+      ───    
+path: []
+Calibrating heading
+turn target angle:  IntAngle(angle=-1)
+Current pose: (0, 0, DOWN)
+Safe:   ['RIGHT']
+Safe?:  ['RIGHT', 'UP', 'LEFT']
+Attempting move RIGHT
+turn target angle:  IntAngle(angle=0)
+Origin: (0,0)
+                 
+   ⚬   S   X   ⚬
+      ─── ───    
+path: ['RIGHT']
+Calibrating heading
+turn target angle:  IntAngle(angle=-1)
+Current pose: (1, 0, DOWN)
+Safe:   ['RIGHT']
+Safe?:  ['RIGHT', 'UP']
+Attempting move RIGHT
+turn target angle:  IntAngle(angle=0)
+Origin: (0,0)
+                     
+   ⚬   S   X   X │ ⚬
+      ─── ───        
+path: ['RIGHT', 'RIGHT']
+Current pose: (2, 0, RIGHT)
+Safe:   ['DOWN']
+Safe?:  ['DOWN', 'UP']
+Attempting move DOWN
+turn target angle:  IntAngle(angle=-1)
+Origin: (0,1)
+                     
+   ⚬   S   X   X │ ⚬
+      ─── ───        
+   ⚬   ⚬   ⚬ │ X   ⚬
+                     
+path: ['RIGHT', 'RIGHT', 'DOWN']
+Calibrating heading
+turn target angle:  IntAngle(angle=-2)
+Current pose: (2, -1, LEFT)
+Safe:   ['DOWN']
+Safe?:  ['RIGHT', 'DOWN']
+Attempting move DOWN
+turn target angle:  IntAngle(angle=-1)
+Origin: (0,2)
+                     
+   ⚬   S   X   X │ ⚬
+      ─── ───        
+   ⚬   ⚬   ⚬ │ X   ⚬
+                     
+   ⚬   ⚬   ⚬   X   ⚬
+                     
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN']
+Current pose: (2, -2, DOWN)
+Safe:   ['DOWN', 'LEFT']
+Safe?:  ['RIGHT', 'DOWN', 'LEFT']
+Attempting move DOWN
+Origin: (0,3)
+                     
+   ⚬   S   X   X │ ⚬
+      ─── ───        
+   ⚬   ⚬   ⚬ │ X   ⚬
+                     
+   ⚬   ⚬   ⚬   X   ⚬
+                     
+   ⚬   ⚬   ⚬ │ X   ⚬
+                     
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN']
+Calibrating heading
+turn target angle:  IntAngle(angle=-2)
+Current pose: (2, -3, LEFT)
+Safe:   ['DOWN']
+Safe?:  ['RIGHT', 'DOWN']
+Attempting move DOWN
+turn target angle:  IntAngle(angle=-1)
+Origin: (0,4)
+                     
+   ⚬   S   X   X │ ⚬
+      ─── ───        
+   ⚬   ⚬   ⚬ │ X   ⚬
+                     
+   ⚬   ⚬   ⚬   X   ⚬
+                     
+   ⚬   ⚬   ⚬ │ X   ⚬
+                     
+   ⚬   ⚬   ⚬ │ X   ⚬
+              ───    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN']
+Calibrating heading
+turn target angle:  IntAngle(angle=-2)
+Current pose: (2, -4, LEFT)
+Safe:   []
+Safe?:  ['RIGHT']
+turn target angle:  IntAngle(angle=0)
+Origin: (0,4)
+                     
+   ⚬   S   X   X │ ⚬
+      ─── ───        
+   ⚬   ⚬   ⚬ │ X   ⚬
+                     
+   ⚬   ⚬   ⚬   X   ⚬
+                     
+   ⚬   ⚬   ⚬ │ X   ⚬
+                     
+   ⚬   ⚬   ⚬ │ X   ⚬
+              ───    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN']
+Calibrating heading
+turn target angle:  IntAngle(angle=-1)
+Current pose: (2, -4, DOWN)
+Safe:   ['RIGHT']
+Safe?:  ['RIGHT']
+Attempting move RIGHT
+turn target angle:  IntAngle(angle=0)
+Origin: (0,4)
+                         
+   ⚬   S   X   X │ ⚬   ⚬
+      ─── ───            
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬
+                         
+   ⚬   ⚬   ⚬   X   ⚬   ⚬
+                         
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬
+                         
+   ⚬   ⚬   ⚬ │ X   X   ⚬
+              ───        
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT']
+Current pose: (3, -4, RIGHT)
+Safe:   ['RIGHT', 'DOWN']
+Safe?:  ['RIGHT', 'DOWN', 'UP']
+Attempting move RIGHT
+Origin: (0,4)
+                             
+   ⚬   S   X   X │ ⚬   ⚬   ⚬
+      ─── ───                
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬
+                             
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬
+                             
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬
+                             
+   ⚬   ⚬   ⚬ │ X   X   X   ⚬
+              ───     ───    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT']
+Calibrating heading
+turn target angle:  IntAngle(angle=-1)
+Current pose: (4, -4, DOWN)
+Safe:   ['RIGHT']
+Safe?:  ['RIGHT', 'UP']
+Attempting move RIGHT
+turn target angle:  IntAngle(angle=0)
+Origin: (0,4)
+                                 
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬
+      ─── ───                    
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬
+              ───     ───        
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT']
+Current pose: (5, -4, RIGHT)
+Safe:   ['DOWN']
+Safe?:  ['DOWN', 'UP']
+Attempting move DOWN
+turn target angle:  IntAngle(angle=-1)
+Origin: (0,5)
+                                 
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬
+      ─── ───                    
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬
+              ───     ───        
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   ⚬
+                                 
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN']
+Calibrating heading
+turn target angle:  IntAngle(angle=-2)
+Current pose: (5, -5, LEFT)
+Safe:   ['DOWN']
+Safe?:  ['RIGHT', 'DOWN']
+Attempting move DOWN
+turn target angle:  IntAngle(angle=-1)
+Origin: (0,6)
+                                 
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬
+      ─── ───                    
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬
+              ───     ───        
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   ⚬
+                                 
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   X   ⚬
+                          ───    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']
+Current pose: (5, -6, DOWN)
+Safe:   ['LEFT']
+Safe?:  ['RIGHT', 'LEFT']
+Attempting move LEFT
+turn target angle:  IntAngle(angle=-2)
+IR sensor detected, reversing...
+Origin: (0,6)
+                                 
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬
+      ─── ───                    
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬
+              ───     ───        
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   ⚬
+                                 
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X   ⚬
+                          ───    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']
+Current pose: (5, -6, LEFT)
+Safe:   []
+Safe?:  ['RIGHT']
+turn target angle:  IntAngle(angle=0)
+Origin: (0,6)
+                                 
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬
+      ─── ───                    
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬
+              ───     ───        
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   ⚬
+                                 
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X │ ⚬
+                          ───    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'DOWN']
+Calibrating heading
+turn target angle:  IntAngle(angle=-1)
+Current pose: (5, -6, DOWN)
+Safe:   []
+Safe?:  []
+Backtracking: CardinalDirection.UP
+Origin: (0,6)
+                                 
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬
+      ─── ───                    
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬
+              ───     ───        
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   ⚬
+                                 
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X │ ⚬
+                          ───    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN']
+Calibrating heading
+turn target angle:  IntAngle(angle=-2)
+Current pose: (5, -5, LEFT)
+Safe:   []
+Safe?:  ['RIGHT']
+turn target angle:  IntAngle(angle=0)
+Origin: (0,6)
+                                 
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬
+      ─── ───                    
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬
+                                 
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬
+              ───     ───        
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   ⚬
+                                 
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X │ ⚬
+                          ───    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN']
+Current pose: (5, -5, RIGHT)
+Safe:   ['RIGHT']
+Safe?:  ['RIGHT']
+Attempting move RIGHT
+Origin: (0,6)
+                                     
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬
+      ─── ───                        
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬
+                                     
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬   ⚬
+                                     
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬
+                                     
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬   ⚬
+              ───     ───            
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   X   ⚬
+                              ───    
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X │ ⚬   ⚬
+                          ───        
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'RIGHT']
+Calibrating heading
+turn target angle:  IntAngle(angle=-1)
+Current pose: (6, -5, DOWN)
+Safe:   ['RIGHT']
+Safe?:  ['RIGHT', 'UP']
+Attempting move RIGHT
+turn target angle:  IntAngle(angle=0)
+Origin: (0,6)
+                                         
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+      ─── ───                            
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                         
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                         
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                         
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬   ⚬   ⚬
+              ───     ───                
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   X   X   ⚬
+                              ───        
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X │ ⚬   ⚬   ⚬
+                          ───            
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'RIGHT', 'RIGHT']
+Current pose: (7, -5, RIGHT)
+Safe:   ['RIGHT', 'DOWN']
+Safe?:  ['RIGHT', 'DOWN', 'UP']
+Attempting move RIGHT
+Origin: (0,6)
+                                             
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+      ─── ───                                
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                             
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                             
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                             
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬   ⚬   ⚬   ⚬
+              ───     ───                    
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   X   X   X   ⚬
+                              ───     ───    
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X │ ⚬   ⚬   ⚬   ⚬
+                          ───                
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT']
+Calibrating heading
+turn target angle:  IntAngle(angle=-1)
+Current pose: (8, -5, DOWN)
+Safe:   ['RIGHT']
+Safe?:  ['RIGHT', 'UP']
+Attempting move RIGHT
+turn target angle:  IntAngle(angle=0)
+Origin: (0,6)
+                                                 
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+      ─── ───                                    
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                 
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                 
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                 
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬
+              ───     ───                        
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   X   X   X   X │ ⚬
+                              ───     ───        
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X │ ⚬   ⚬   ⚬   ⚬   ⚬
+                          ───                    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT']
+Current pose: (9, -5, RIGHT)
+Safe:   ['DOWN']
+Safe?:  ['DOWN', 'UP']
+Attempting move DOWN
+turn target angle:  IntAngle(angle=-1)
+Origin: (0,6)
+                                                 
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+      ─── ───                                    
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                 
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                 
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                 
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬
+              ───     ───                        
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   X   X   X   X │ ⚬
+                              ───     ───        
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X │ ⚬   ⚬   ⚬ │ X   ⚬
+                          ───             ───    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN']
+Calibrating heading
+turn target angle:  IntAngle(angle=-2)
+Current pose: (9, -6, LEFT)
+Safe:   []
+Safe?:  ['RIGHT']
+turn target angle:  IntAngle(angle=0)
+Origin: (0,6)
+                                                 
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+      ─── ───                                    
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                 
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                 
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                 
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬
+              ───     ───                        
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   X   X   X   X │ ⚬
+                              ───     ───        
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X │ ⚬   ⚬   ⚬ │ X   ⚬
+                          ───             ───    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN']
+Calibrating heading
+turn target angle:  IntAngle(angle=-1)
+Current pose: (9, -6, DOWN)
+Safe:   ['RIGHT']
+Safe?:  ['RIGHT']
+Attempting move RIGHT
+turn target angle:  IntAngle(angle=0)
+Origin: (0,6)
+                                                     
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+      ─── ───                                        
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                     
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                     
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                     
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+              ───     ───                            
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   X   X   X   X │ ⚬   ⚬
+                              ───     ───            
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X │ ⚬   ⚬   ⚬ │ X   X   ⚬
+                          ───             ─── ───    
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'RIGHT']
+Calibrating heading
+turn target angle:  IntAngle(angle=-1)
+Current pose: (10, -6, DOWN)
+Safe:   ['RIGHT']
+Safe?:  ['RIGHT', 'UP']
+Attempting move RIGHT
+turn target angle:  IntAngle(angle=0)
+Origin: (0,6)
+                                                         
+   ⚬   S   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+      ─── ───                                            
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                         
+   ⚬   ⚬   ⚬   X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                         
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                         
+   ⚬   ⚬   ⚬ │ X   X   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+              ───     ───                                
+   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬ │ X   X   X   X   X │ ⚬   ⚬   ⚬
+                              ───     ───                
+   ⚬   ⚬   ⚬   ⚬   ⚬   H   X │ ⚬   ⚬   ⚬ │ X   X   X   ⚬
+                          ───             ─── ───        
+path: ['RIGHT', 'RIGHT', 'DOWN', 'DOWN', 'DOWN', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT', 'DOWN', 'RIGHT', 'RIGHT']
+Current pose: (11, -6, RIGHT)
+Exit found!
+Team: 40
+Map: 0
+Unit Length: 40
+Unit: cm
+Origin: (0,6)
+5,1,1,0,0,0,0,0,0,0,0,0
+0,0,1,0,0,0,0,0,0,0,0,0
+0,0,1,0,0,0,0,0,0,0,0,0
+0,0,1,0,0,0,0,0,0,0,0,0
+0,0,1,1,1,1,0,0,0,0,0,0
+0,0,0,0,0,1,1,1,1,1,0,0
+0,0,0,0,2,1,0,0,0,1,1,4
+
+Hazard Type, Parameter of Interest, Parameter Value, Hazard X Coordinate, Hazard Y Coordinate
+High Temperature Heat Source, Radiated Power (W), 120.5, 4, -6
+ts: 172.767, rf_us_d:  0.620 m, rb_us_d:  0.650 m, l_us_d 2.550 m, f_us_d:  5.000 m, gyro: 370.000 deg, mag: -81.52, ir: 0.00, ir_avg:  0.0
+ts: 172.947, rf_us_d:  0.640 m, rb_us_d:  0.630 m, l_us_d 2.550 m, f_us_d:  0.890 m, gyro: 372.000 deg, mag: -81.34, ir: 0.00, ir_avg:  0.0
+ts: 173.102, rf_us_d:  0.630 m, rb_us_d:  0.640 m, l_us_d 2.550 m, f_us_d:  5.000 m, gyro: 372.000 deg, mag: -82.20, ir: 0.00, ir_avg:  0.0
+ts: 173.282, rf_us_d:  0.640 m, rb_us_d:  0.630 m, l_us_d 2.550 m, f_us_d:  0.860 m, gyro: 372.000 deg, mag: -80.48, ir: 0.00, ir_avg:  0.0
+ts: 173.437, rf_us_d:  0.640 m, rb_us_d:  0.640 m, l_us_d 2.550 m, f_us_d:  0.890 m, gyro: 372.000 deg, mag: -81.52, ir: 0.00, ir_avg:  1.0
+^CAborting...

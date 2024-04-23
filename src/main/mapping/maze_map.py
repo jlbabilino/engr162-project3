@@ -8,6 +8,8 @@ class DetectedHazard:
     """
     Represents a detected hazard in the maze.
     """
+    x: int
+    y: int
     hazard_type: str
     parameter_of_interest: str
     parameter_value: float
@@ -27,7 +29,12 @@ class MazeMapCell:
 
     cell_type: MazeMapCellType = MazeMapCellType.NOT_VISITED
 
-    hazard: Optional[DetectedHazard] = None
+class MazeDecisionStatus(Enum):
+    EXIT = 0
+    STUCK = 1
+    BACKTRACK = 2
+    NO_WALL_IN_WAY = 3
+    MAYBE_WALL_IN_WAY = 4
 
 @dataclass
 class MazeDecision:
@@ -36,22 +43,12 @@ class MazeDecision:
     """
     direction: CardinalDirection
     """
-    The direction in which the robot should move. None if the robot cannot make
-    a move or has reached the exit.
+    The status of the decision, indicating whether or not robot is stuck, if it
+    has exit the maze, whether or not it should backtrack, or whether or not it
+    knows for sure that there is no wall in the way.
     """
-    is_safe: bool
-    """
-    Whether the robot is safe to move in the given direction without checking
-    first. If False, the robot should check for hazards before moving.
-    """
-    is_exit: bool
-    """
-    Whether the robot has reached the exit.
-    """
-    should_backtrack: bool
-    """
-    Whether or not the robot should go back to the previous cell.
-    """
+    status: MazeDecisionStatus
+
 class MazeMap:
     def __init__(self):
         self.x_min = 0
@@ -68,11 +65,14 @@ class MazeMap:
 
         self.maze_map[0][0].cell_type = MazeMapCellType.STARTING_POINT
 
-        self.maze_map[0][0].left_wall = True
-        self.maze_map[0][0].bottom_wall = True
-        self.maze_map[1][0].bottom_wall = True
+        # self.maze_map[0][0].left_wall = True
+        # self.maze_map[0][0].bottom_wall = True
+        # self.maze_map[1][0].bottom_wall = True
 
         self.maze_path = []
+
+        self.ir_hazards: List[DetectedHazard] = []
+        self.mag_hazards: List[DetectedHazard] = []
 
     def optimal_next_move(self, x: int, y: int, path: List[CardinalDirection]) -> MazeDecision:
         """
@@ -81,40 +81,45 @@ class MazeMap:
         move to, meaning it is known that there is no wall or obstacle in the
         way.
         """
-        potentially_safe_directions = []
-        safe_directions = []
+
+        # if x == 2 and y == -4:
+        #     return MazeDecision(CardinalDirection.RIGHT, MazeDecisionStatus.NO_WALL_IN_WAY)
+
+        maybe_wall_in_way_dirs: List[CardinalDirection] = []
+        no_wall_in_way_dirs: List[CardinalDirection] = []
         for direction in (CardinalDirection.RIGHT,
-                          CardinalDirection.UP,
                           CardinalDirection.DOWN,
+                          CardinalDirection.UP,
                           CardinalDirection.LEFT):
             if len(path) > 0 and direction == path[-1].reverse():
                 continue
             coords = MazeCoords(x, y).move(direction)
-            if self.maze_map[coords.y][coords.x].cell_type == MazeMapCellType.VISITED:
+            adjacent_cell_type = self.maze_map[coords.y][coords.x].cell_type
+            if (adjacent_cell_type == MazeMapCellType.VISITED
+                    or adjacent_cell_type == MazeMapCellType.STARTING_POINT
+                    or adjacent_cell_type == MazeMapCellType.HEAT_SOURCE
+                    or adjacent_cell_type == MazeMapCellType.MAGNETIC_SOURCE):
                 continue
             wall = self.get_wall(x, y, direction)
             if wall == False or wall == None:
-                potentially_safe_directions.append(direction)
+                maybe_wall_in_way_dirs.append(direction)
             if wall == False:
-                safe_directions.append(direction)
+                no_wall_in_way_dirs.append(direction)
 
-        # for direction in potentially_safe_directions:
-        #     coords = MazeCoords(x, y).move(direction)
-        #     if self.maze_map[coords.y][coords.x].cell_type == MazeMapCellType.NOT_VISITED:
-        #         safe_directions.append(direction)
+        if x >= 11:
+            return MazeDecision(None, MazeDecisionStatus.EXIT)
 
-        print("Safe:  ", [d.name for d in safe_directions])
-        print("Safe?: ", [d.name for d in potentially_safe_directions])
+        print("Safe:  ", [d.name for d in no_wall_in_way_dirs])
+        print("Safe?: ", [d.name for d in maybe_wall_in_way_dirs])
         
-
-        if len(safe_directions) > 0:
-            return MazeDecision(safe_directions[0], True, False, False)
-        elif len(potentially_safe_directions) > 0:
-            return MazeDecision(potentially_safe_directions[0], False, False, False)
+        if len(no_wall_in_way_dirs) > 0:
+            return MazeDecision(no_wall_in_way_dirs[0], MazeDecisionStatus.NO_WALL_IN_WAY)
+        elif len(maybe_wall_in_way_dirs) > 0:
+            return MazeDecision(maybe_wall_in_way_dirs[0], MazeDecisionStatus.MAYBE_WALL_IN_WAY)
         elif len(path) > 0:
-            return MazeDecision(path[-1].reverse(), True, False, True)
+            return MazeDecision(path[-1].reverse(), MazeDecisionStatus.BACKTRACK)
         else:
-            return MazeDecision(None, False, False, False)
+            return MazeDecision(None, MazeDecisionStatus.STUCK)
 
     def expand_map(self, x: int, y: int):
         self.x_min = min(self.x_min, x)
@@ -177,11 +182,31 @@ class MazeMap:
 
         self.expand_map(x, y)
 
-    def update_hazard_cell(self, x, y, hazard: DetectedHazard):
+    def update_ir_hazard(self, x: int, y: int, strength: float):
         """
         Update the cell at (x, y) with the given hazard.
         """
-        self.maze_map[y][x].hazard = hazard
+        self.maze_map[y][x].cell_type = MazeMapCellType.HEAT_SOURCE
+
+        self.expand_map(x, y)
+
+        self.ir_hazards.append(DetectedHazard(x, y, "High Temperature Heat Source", "Radiated Power (W)", strength))
+
+    def update_mag_hazard(self, x: int, y: int, strength: float):
+        """
+        Update the cell at (x, y) with the given hazard.
+        """
+        self.maze_map[y][x].cell_type = MazeMapCellType.MAGNETIC_SOURCE
+
+        self.expand_map(x, y)
+
+        self.mag_hazards.append(DetectedHazard(x, y, "Electrical/Magnetic Activity Source", "Field Strength (uT)", strength))
+
+    def update_end_cell(self, x, y):
+        """
+        Update the cell at (x, y) as the exit point.
+        """
+        self.maze_map[y][x].cell_type = MazeMapCellType.EXIT_POINT
 
         self.expand_map(x, y)
 
@@ -195,6 +220,10 @@ class MazeMap:
         for y in range(self.y_max, self.y_min - 1, -1):
             print(",".join([str(self.maze_map[y][x].cell_type.value)
                             for x in range(self.x_min, self.x_max + 1, +1)]))
+        print()
+        print("Hazard Type, Parameter of Interest, Parameter Value, Hazard X Coordinate, Hazard Y Coordinate")
+        for hazard in self.ir_hazards + self.mag_hazards:
+            print(f"{hazard.hazard_type}, {hazard.parameter_of_interest}, {hazard.parameter_value}, {hazard.x}, {hazard.y}")
             
     def pretty_print(self):
         """
@@ -248,5 +277,7 @@ class MazeMap:
 # testMaze.update_visited_cell(0, 2, True, True, True, True)
 # testMaze.update_visited_cell(-3, 0, True, True, True, True)
 # testMaze.update_visited_cell(0, -4, True, True, True, True)
+
+# testMaze.update_ir_hazard(1, 1, 100)
 
 # testMaze.pretty_print()

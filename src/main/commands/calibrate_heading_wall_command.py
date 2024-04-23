@@ -16,12 +16,13 @@ class CalibrateHeadingWallCommand:
         self.timer = Timer()
 
     def initialize(self):
+        print("Calibrating heading")
         self.timer.start()
 
     def execute(self) -> bool:
 
-        d1 = io.left_back_ultrasonic_distance()
-        d2 = io.left_front_ultrasonic_distance()
+        d1 = io.right_back_ultrasonic_distance()
+        d2 = io.right_front_ultrasonic_distance()
 
         if d1 == math.inf or d2 == math.inf:
             io.set_drive_left_speed(0)
@@ -30,11 +31,16 @@ class CalibrateHeadingWallCommand:
 
         error = d1 - d2
 
-        K = 6
-        io.set_drive_left_speed(K * error)
-        io.set_drive_right_speed(-K * error)
+        # print("Error: ", error)
+        if abs(error) >= 0.06:
+            print("Not enough error")
+            error = 0
 
-        if abs(error) < 0.001 or self.timer.has_elapsed(1):
+        K = 4
+        io.set_drive_left_speed(-K * error)
+        io.set_drive_right_speed(K * error)
+
+        if self.timer.has_elapsed(1.5):
             io.set_drive_left_speed(0)
             io.set_drive_right_speed(0)
             self.robot.set_heading(self.robot.get_heading_int_angle().to_angle())

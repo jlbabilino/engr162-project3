@@ -18,28 +18,29 @@ class DetectSurroundingsCommand:
         distances = {}
         distances[CardinalDirection.RIGHT] = (
                 io.front_ultrasonic_distance()
-                + constants.FRONT_ULTRASONIC_OFFSET)
+                + constants.FRONT_ULTRASONIC.x_offset)
         distances[CardinalDirection.DOWN] = (
-                io.right_ultrasonic_distance()
-                + constants.RIGHT_ULTRASONIC_OFFSET)
-        distances[CardinalDirection.UP] = (
-                0.5 * (io.left_front_ultrasonic_distance()
-                     + io.left_back_ultrasonic_distance())
-                     + constants.SIDE_ULTRASONIC_OFFSET)
+                0.5 * (io.right_front_ultrasonic_distance()
+                     + io.right_back_ultrasonic_distance())
+                     - constants.RIGHT_FRONT_ULTRASONIC.y_offset)
+        # distances[CardinalDirection.UP] = (
+        #         io.left_ultrasonic_distance()
+        #         + constants.LEFT_ULTRASONIC.y_offset)
 
         for direction, distance in distances.items():
             global_direction = self.robot.get_direction().plus(direction)
-            if self.robot.maze_map.get_wall(
-                        self.robot.coords.x,
-                        self.robot.coords.y,
-                        global_direction) == None:
-                if distance < constants.WALL_DISTANCE:
-                    self.robot.maze_map.set_wall(
-                            self.robot.coords.x, self.robot.coords.y, global_direction, True)
-                else:
-                    self.robot.maze_map.set_wall(
-                            self.robot.coords.x, self.robot.coords.y, global_direction, False)
+            # if self.robot.maze_map.get_wall(
+            #             self.robot.coords.x,
+            #             self.robot.coords.y,
+            #             global_direction) == None:
+            if distance <= constants.WALL_DETECTION_THRESHOLD:
+                self.robot.maze_map.set_wall(
+                        self.robot.coords.x, self.robot.coords.y, global_direction, True)
+            else:
+                self.robot.maze_map.set_wall(
+                        self.robot.coords.x, self.robot.coords.y, global_direction, False)
 
         self.robot.maze_map.pretty_print()
+        print(f"path: {[i.name for i in self.robot.path]}")
         return True
 

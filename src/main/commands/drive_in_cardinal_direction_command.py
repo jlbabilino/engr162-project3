@@ -2,6 +2,7 @@ import math
 
 import constants
 from robot import Robot
+from robot_io import io
 from util import CardinalDirection
 import commands.sequential_command as sc
 import commands.drive_forward_command as dfc

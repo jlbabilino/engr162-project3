@@ -53,6 +53,18 @@ for wall in envs.SIM_ENVIRONMENT.get_walls():
     wall_markers.append(plt.Line2D([wall.x1, wall.x2], [wall.y1, wall.y2], color='black'))
     ax.add_line(wall_markers[-1])
 
+ir_obstacle_markers = []
+
+for obstacle in envs.SIM_ENVIRONMENT.get_ir_obstacles():
+    ir_obstacle_markers.append(plt.Circle((obstacle.x, obstacle.y), 0.1, color='red'))
+    ax.add_patch(ir_obstacle_markers[-1])
+
+mag_obstacle_markers = []
+
+for obstacle in envs.SIM_ENVIRONMENT.get_mag_obstacles():
+    mag_obstacle_markers.append(plt.Circle((obstacle.x, obstacle.y), 0.1, color='purple'))
+    ax.add_patch(mag_obstacle_markers[-1])
+
 def initialize_viz():
     plt.ion()
     plt.show()
