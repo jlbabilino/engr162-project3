@@ -10,9 +10,7 @@ import states.command_then_state_state as cts
 import states.decide_next_move_state as dnms
 
 class CalibrateState:
-    """
-    In this state, robot does nothing. Useful for debugging, testing, etc.
-    """
+
     def __init__(self, robot: Robot):
         self.robot = robot
 
