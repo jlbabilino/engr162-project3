@@ -25,4 +25,27 @@ cd src/main
 python3 run_demo.py
 ```
 
+A Matplotlib window will open showing the robot (blue box 🟦), ultrasonic sensor distances (green lines) walls of maze, IR obstacles (red circles 🔴), and magnetic obstacles (purple circles 🟣):
 <img width="632" alt="simulation visualization window" src="https://github.com/jlbabilino/engr162-project3/assets/28580376/e8fffee5-92ff-439f-bbef-9acd5abcddde">
+
+Resulting map after solving maze:
+
+```
+                                                         
+   ⚬   S   X   H   ⚬   ⚬   M   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                  ─── ───                                
+   ⚬   ⚬ │ X   ⚬ │ X   X   X │ ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                      ───                                
+   ⚬   ⚬ │ X   X   X │ ⚬   M   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+          ───     ───                                    
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                         
+   ⚬   ⚬   ⚬ │ X   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬   ⚬
+                                                         
+   ⚬   ⚬   ⚬ │ X   ⚬   X   X   X   X   X │ ⚬   ⚬   ⚬   ⚬
+                          ─── ─── ───                    
+   ⚬   ⚬   ⚬ │ X   X   X │ ⚬   ⚬   ⚬ │ X   X   X   X   ⚬
+              ─── ─── ───             ─── ─── ─── ───
+```
+
+Notice that not all walls are necessarily detected, just enough to make it through the maze.
