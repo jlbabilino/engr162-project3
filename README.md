@@ -24,3 +24,5 @@ To run the demo code
 cd src/main
 python3 run_demo.py
 ```
+
+<img width="632" alt="simulation visualization window" src="https://github.com/jlbabilino/engr162-project3/assets/28580376/e8fffee5-92ff-439f-bbef-9acd5abcddde">
