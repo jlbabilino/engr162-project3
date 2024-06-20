@@ -28,7 +28,7 @@ cd src/main
 python3 run_demo.py
 ```
 
-If you get an error message about `brickpi3` not being found, make sure to follow the [above steps](https://github.com/jlbabilino/engr162-project3/edit/main/README.md#changing-between-simulation-and-real) to change to simulation mode.
+If you get an error message about `brickpi3` not being found, make sure to follow the [above steps](https://github.com/jlbabilino/engr162-project3/tree/main?tab=readme-ov-file#changing-between-simulation-and-real) to change to simulation mode.
 
 A Matplotlib window will open showing the robot (blue box 🟦), ultrasonic sensor distances (green lines) walls of maze, IR obstacles (red circles 🔴), and magnetic obstacles (purple circles 🟣):
 
